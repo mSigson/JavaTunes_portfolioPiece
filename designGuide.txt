@@ -1,0 +1,23 @@
+General JS Rules:
+--------------------------------------------
+-Variables should be nouns.
+-Functions/Methods should be verbs/adjectives.
+    -Example: var car = {}
+                car.isDriving = function() {};
+
+-if doing an ajax call inside a function, then that function needs to ONLY be in charge of grabbing data AND must return the Promise of the Ajax call.
+    ie.
+            function getPlaylist() {
+                return $.ajax().then();
+            }
+
+-try to use const/let instead of var.
+-You can write your own Helper functions for helping you to write a function that was specified by our pseudocode. These helper functions don't have to be agreed upon by the group as a whole.
+
+
+User Story
+--------------------------------------------
+-only <section class="landing"> content loads
+-
+
+
