@@ -33,7 +33,7 @@ app.events = function () {
 	app.createChangeLocationBtnListener();
 }
 
-
+// Jenn
 app.createLocationFormSubmitListener = function(){
 	// -on Submit EventListener
         // -Do an AJAX call to FourSquare API.
@@ -51,26 +51,32 @@ app.createLocationFormSubmitListener = function(){
         }
 };	
 
+// Jenn
 app.getCoffeeShopLocation = function(){
 	// -Do an AJAX call to FourSquare API.
 };
 
+// Jenn
 app.scrollToMusic = function() {
 	// Smooth scroll to section music
 };
 
+// Jenn
 app.scrollToResults = function() {
 	// Smooth scroll to section results
 };
 
+// Jenn
 app.showMusic = function (){
 	// Set display: block for section music.
 };
 
+// Jenn
 app.isResultsShowing = function(){
 	// must return true or false
 };
 
+// Maren
 app.createMusicGenreBtnListener = function(){
 
 	// -IF user picks <button class="music__genreBtn">... on click, 
@@ -84,27 +90,33 @@ app.createMusicGenreBtnListener = function(){
 				app.resetOtherGenreToDefault();
 };
 
+// Maren
 app.storeGenreVal = function(){
 	// store value of selected input in app.genre
 };
 
+// Maren
 app.addClassSelected = function(selectedButton) {
 	// add class to selected button {music__genreBtn--selected}, 
 };
 
+// Maren
 app.removeClassSelected = function(unselectedButtons){
 	// -remove the class of {music__genreBtn--selected} from all other buttons to this.not
 };
 
+// Maren
 app.resetOtherGenreToDefault = function(){
 // -reset the <select class="genreOtherInput"> to default value
 };
 
+// Maren
 app.createGenreOtherInputListener = function(){
 	 // -IF user selects <select class="music__genreOtherInput>", remove the class {music__genreBtn--selected} from all buttons, store value of selected input in app.genre
 	 	app.removeClassSelected($('.music__genreBtn'));
 };
 
+//Fatin 
 app.createMusicFormSubmitBtnListener = function(){
 		// -on {music__musicFormSubmitBtn}, click,
 
@@ -140,67 +152,85 @@ app.createMusicFormSubmitBtnListener = function(){
 	 	}
 };
 
+// Fatin
 app.showErrorMsg = function(){
 
 };
 
+// Fatin
 app.hideLoadIndicator = function(){
 
 };
 
+// Fatin
 app.hideLoadScreen = function(){
 
 };
 
+// TODO
 app.displayMap = function(){
-
+	//needs to be broken down into subfunctions
+	// display markers
+		//create popups
 };
 
+// Fatin
 app.displaySpotifyPlaylist = function(){
 
 };
 
+// Fatin
 app.getSpotifyPlaylist = function(){
  // - call Spotify AJAX function
 };
 
+// Fatin
 app.showResults = function(){
  //set <section class="results"> display block.
 };
 
+// Maren
 app.alertIncompleteForm = function(){
 // sweet alert message
 };
 
+// Fatin
 app.genreIsNull = function(){
 // must return true or false
 };
+
+// Jenn
  //- store the value of both inputs in minutes from {music__durationForm}, call this value app.duration
 app.storeDurationVal = function(){
 
 };
+
+// TODO
 // on results__reloadBtn click
 app.createReloadBtnListener = function(){
 	// error message reload button (have yet to put into html context)
 };
+
+// Fatin
 // on results__changeMusicBtn click
 app.createChangeMusicBtnListener = function(){
 	// - smooth scroll up to music section.
 	app.scrollToMusic();
 };
+
 // on results__changeLocationBtn click
 app.createChangeLocationBtnListener = function(){
 	// -smooth scroll up to landing section.
 	app.scrollToLanding();
 };
 
-
+// Jenn
 app.scrollToLanding = function(){
 
 };
 
 
-
+// Maren
 //  - initialize the auto complete library
 app.initLocationInput = function () {
 
