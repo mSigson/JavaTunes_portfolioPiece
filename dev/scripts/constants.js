@@ -1,0 +1,3 @@
+CONSTANTS = {
+	numOfLocations : 10,
+};
