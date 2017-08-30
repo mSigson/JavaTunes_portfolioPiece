@@ -21,32 +21,43 @@ User Story
     -display none on other sections
     ->CSS: set display: none for all sections other than landing
 
-    ->CODE:
-    -Initialize landing__locationForm
-        -on Submit EventListener
-            -Do an AJAX call to Yelp API.
-            -Set display: block for section music.
-            -Smooth scroll to section music.
-        -Initialize the landing__locationInput.
-            -Attach the Leaflet map.
-    
-
 -User inputs their location with Autocomplete suggestions.
 
 -User presses submit or press enter.
 
 -On Submit, display=block of <section class="music">.
-    -Smooth scroll to section music.
-    
+        -Smooth scroll to section music.
+
 -If the landing__locationForm is RE-SUBMITTED, just smooth scroll to music_section. 
+
+    ->CODE:
+
+    -Initialize landing__locationForm
+        -on Submit EventListener
+            -Do an AJAX call to Yelp API.
+            -Set display: block for section music.
+            -Smooth scroll to section music.
+            -app.genre = null
+        -Initialize the landing__locationInput.
+            -Attach the Leaflet map.
+    
+
 -User selects from <form class="durationInputContainer">
     -Default of form set to 1 hour. Therefore, no "require" needed for form inputs.
+
 -User picks a <button class="music__genreBtn"> OR <select class="genreOtherInput">
+    -IF user picks <button class="music__genreBtn">... on click, add class to selected button {music__genreBtn--selected}, store value of selected input in app.genre
+         -remove the class of {music__genreBtn--selected} from all other buttons to this.not
+         -reset the <select class="genreOtherInput"> to default value
+    -IF user selects <select class="music__genreOtherInput>", remove the class {music__genreBtn--selected} from all buttons, store value of selected input in app.genre
+
 -User presses music__musicFormSubmitBtn.
--IF form classes music__durationForm AND music__genreForm have values, 
-    then set <section class="results"> display block.
-    -Smooth scroll to section result.
-    -ELSE display modal (Sweet Alert) Notifying whether music__genreForm has not been filled.
+    -on {music__musicFormSubmitBtn}, click,
+        - store the value of both inputs in minutes from {music__durationForm}, call this value app.duration
+        -if the value of variable app.genre is =null, sweet alert message
+         -else the value of variable app.genre is !=null, then set <section class="results"> display block.
+            -Smooth scroll to section result.
+   
 -Display Spotify embedded Playlist (results__playlist) and Leaflet Map (results__map) with Markers with CONSTANTS.numOfLocations of potential coffee locations.
     -Disable scroll of the results__map.
 -If User clicks the results__changeMusicBtn, smooth scroll back to music section.
