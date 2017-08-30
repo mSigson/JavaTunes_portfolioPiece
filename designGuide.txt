@@ -35,9 +35,12 @@ User Story
     -Initialize landing__locationForm
         -on Submit EventListener
             -Do an AJAX call to Yelp API.
-            -Set display: block for section music.
-            -Smooth scroll to section music.
-            -app.genre = null
+            IF (<section class ="results" === display.none)
+               -Set display: block for section music.
+               - app.genre = null
+               - Smooth scroll to section music.
+            ELSE (<section class ="results" === display.block)
+               - smooth scroll to section results
         -Initialize the landing__locationInput.
             -Attach the Leaflet map.
     
@@ -56,14 +59,27 @@ User Story
         - store the value of both inputs in minutes from {music__durationForm}, call this value app.duration
         -if the value of variable app.genre is =null, sweet alert message
          -else the value of variable app.genre is !=null, then set <section class="results"> display block.
-            -Smooth scroll to section result.
+            - Smooth scroll to section result. 
+            - call Spotify AJAX function
+            - call FourSquare AJAZ function
+            - IF API call is successful 
+                - display spotify playlist (function)
+                - display map, CONSTANTS.numOfLocations, (function)
+                - set {results__loadScreen} to display none
+            - ELSE (if API call failed)
+                - set {results__loadIndicator} to display none
+                - set {results__loadErrorMsg} to display block
+
    
 -Display Spotify embedded Playlist (results__playlist) and Leaflet Map (results__map) with Markers with CONSTANTS.numOfLocations of potential coffee locations.
-    -Disable scroll of the results__map.
--If User clicks the results__changeMusicBtn, smooth scroll back to music section.
-    -Once user submits music form, smooth scroll to section results with NEW results.
--If User clicks results__changeLocationBtn, smooth scroll back to landing section.
-    -Once user submits location, smooth scroll to results section with NEW results.
+
+
+-User presses results__changeMusicBtn.
+    - smooth scroll up to music section.
+ 
+
+ -User presses results__changeLocationBtn.
+    -smooth scroll up to landing section.
 
 
 
