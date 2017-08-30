@@ -6,6 +6,8 @@ app = {
 		lng  : 0
 	},
 	resultsDisplayed : false,
+	spotifyPlaylistPromise: null,
+	coffeeShopLocationPromise: null,
 };
 
 app.init = function () {
@@ -35,7 +37,8 @@ app.events = function () {
 app.createLocationFormSubmitListener = function(){
 	// -on Submit EventListener
         // -Do an AJAX call to FourSquare API.
-        app.getCoffeeShopLocation();
+        app.coffeeShopLocationPromise = app.getCoffeeShopLocation();
+
         if(app.isResultsShowing()){
         //    -Set display: block for section music.
         		app.showMusic();
@@ -104,33 +107,97 @@ app.createGenreOtherInputListener = function(){
 
 app.createMusicFormSubmitBtnListener = function(){
 		// -on {music__musicFormSubmitBtn}, click,
+
 	 //        - store the value of both inputs in minutes from {music__durationForm}, call this value app.duration
+	 app.storeDurationVal();
+
 	 //        -if the value of variable app.genre is =null, sweet alert message
-	 //         -else the value of variable app.genre is !=null, then set <section class="results"> display block.
-	 //            - Smooth scroll to section result. 
-	 //            - call Spotify AJAX function
-	 //            - call FourSquare AJAZ function
-	 //            - IF API call is successful 
+	 	if(app.genreIsNull()) {
+	 		app.alertIncompleteForm();
+
+	 	}else {
+	 		app.showResults();
+	 		app.scrollToResults();
+	 		app.spotifyPlaylistPromise = app.getSpotifyPlaylist();
+	 			$.when(app.spotifyPlaylistPromise, app.coffeeShopLocationPromise)
+	 				.then( (spotifyRes, coffeeShopLocationRes) => {
 	 //                - display spotify playlist (function)
+	 					app.displaySpotifyPlaylist();
 	 //                - display map, CONSTANTS.numOfLocations, (function)
+	 					app.displayMap();
 	 //                - set {results__loadScreen} to display none
-	 //            - ELSE (if API call failed)
+	 					app.hideLoadScreen();
+
+	 				}).fail((err) =>{
 	 //                - set {results__loadIndicator} to display none
+	 					app.hideLoadIndicator();
 	 //                - set {results__loadErrorMsg} to display block
+	 					app.showErrorMsg();
+	 					
+	 				});
+
+
+	 	}
+};
+
+app.showErrorMsg = function(){
+
+};
+
+app.hideLoadIndicator = function(){
+
+};
+
+app.hideLoadScreen = function(){
+
+};
+
+app.displayMap = function(){
+
+};
+
+app.displaySpotifyPlaylist = function(){
+
+};
+
+app.getSpotifyPlaylist = function(){
+ // - call Spotify AJAX function
+};
+
+app.showResults = function(){
+ //set <section class="results"> display block.
+};
+
+app.alertIncompleteForm = function(){
+// sweet alert message
+};
+
+app.genreIsNull = function(){
+// must return true or false
+};
+ //- store the value of both inputs in minutes from {music__durationForm}, call this value app.duration
+app.storeDurationVal = function(){
+
 };
 // on results__reloadBtn click
 app.createReloadBtnListener = function(){
-	
+	// error message reload button (have yet to put into html context)
 };
 // on results__changeMusicBtn click
 app.createChangeMusicBtnListener = function(){
 	// - smooth scroll up to music section.
+	app.scrollToMusic();
 };
 // on results__changeLocationBtn click
 app.createChangeLocationBtnListener = function(){
 	// -smooth scroll up to landing section.
+	app.scrollToLanding();
 };
 
+
+app.scrollToLanding = function(){
+
+};
 
 
 
