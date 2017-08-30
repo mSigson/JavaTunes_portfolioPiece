@@ -18,6 +18,49 @@ General JS Rules:
 User Story
 --------------------------------------------
 -only <section class="landing"> content loads
--
+    -display none on other sections
+    ->CSS: set display: none for all sections other than landing
+
+    ->CODE:
+    -Initialize landing__locationForm
+        -on Submit EventListener
+            -Do an AJAX call to Yelp API.
+            -Set display: block for section music.
+            -Smooth scroll to section music.
+        -Initialize the landing__locationInput.
+            -Attach the Leaflet map.
+    
+
+-User inputs their location with Autocomplete suggestions.
+
+-User presses submit or press enter.
+
+-On Submit, display=block of <section class="music">.
+    -Smooth scroll to section music.
+    
+-If the landing__locationForm is RE-SUBMITTED, just smooth scroll to music_section. 
+-User selects from <form class="durationInputContainer">
+    -Default of form set to 1 hour. Therefore, no "require" needed for form inputs.
+-User picks a <button class="music__genreBtn"> OR <select class="genreOtherInput">
+-User presses music__musicFormSubmitBtn.
+-IF form classes music__durationForm AND music__genreForm have values, 
+    then set <section class="results"> display block.
+    -Smooth scroll to section result.
+    -ELSE display modal (Sweet Alert) Notifying whether music__genreForm has not been filled.
+-Display Spotify embedded Playlist (results__playlist) and Leaflet Map (results__map) with Markers with CONSTANTS.numOfLocations of potential coffee locations.
+    -Disable scroll of the results__map.
+-If User clicks the results__changeMusicBtn, smooth scroll back to music section.
+    -Once user submits music form, smooth scroll to section results with NEW results.
+-If User clicks results__changeLocationBtn, smooth scroll back to landing section.
+    -Once user submits location, smooth scroll to results section with NEW results.
+
+
+
+CONSTANTS
+--------------------------------------------
+CONSTANTS = {
+    numOfLocations: 10,
+
+};
 
 
