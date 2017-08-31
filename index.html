@@ -33,6 +33,33 @@
 
 <!-- results section -->
 
+<section class = "results">
+	<div class="wrapper">
+		<div class="results__loadScreen">
+			<div class="results__loadIndicator"></div>
+			<div class="results__loadErrorMsg">
+				<p>(error message to user)</p>
+				<button class="results__reloadBtn"></button>
+			</div>
+		</div>
+		<div class="results__playlistContainer">
+			<p class="results__playlistTitle">Your Playlist</p>
+			<button class="results__changeMusicBtn"></button>
+			<div class="results__playlist">
+				<!-- Spotify Playlist -->
+			</div>
+			<button class="generateNewPlaylistBtn"></button>
+		</div>
+		<div class="results__mapContainer">
+			<p class="results__mapTitle">Coffee Locations near (user's inputted location)</p>
+			<button class="results__changeLocationBtn"></button>
+			<div class="results__map">
+				<!-- FourSquare/Leaflet Map -->
+			</div>
+		</div>
+	</div>
+</section>
+
 	<script src="public/scripts/main.js"></script>
 	
 </body>
