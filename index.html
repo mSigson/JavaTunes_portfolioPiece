@@ -3,11 +3,9 @@
 <head>
 	<meta charset="UTF-8">
 	<title>The Fellowship</title>
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
 	<link rel="stylesheet" href="public/styles/style.css">
-	<script
-  src="https://code.jquery.com/jquery-3.2.1.min.js"
-  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-  crossorigin="anonymous"></script>
 </head>
 <body>
 <!--		Landing Section				-->
@@ -18,7 +16,7 @@
 		<form action="" class="landing__LocationForm">
 			<label for="locationInput" class="landing__locationLabel">Where do you want to find coffee shops?</label>
 			<div class="landing__locationInputContainer">
-				<input type="text" class="landing__locationInput" placeholder="Search location...">
+				<input id="pac-input" class="landing__locationInput controls" type="text" placeholder="Search location...">
 				<input type="submit" class="landing__locationFormSubmit">
 			</div>
 		</form>
@@ -56,17 +54,19 @@
 
 		<form action="" class="music__genreForm">
 			<div class="music__genreBtnContainer">
-				<button class="music__genreBtn">Rock</button>
-				<button class="music__genreBtn">Pop</button>
-				<button class="music__genreBtn">Alternative</button>
-				<button class="music__genreBtn">Country</button>
-				<button class="music__genreBtn">Classical</button>
-				<button class="music__genreBtn">Indie</button>
-				<button class="music__genreBtn">Jazz</button>
-				<button class="music__genreBtn">Electronic</button>
+				<button class="music__genreBtn" value="rock">Rock</button>
+				<button class="music__genreBtn" value="pop">Pop</button>
+				<button class="music__genreBtn" value="hiphop">Hip Hop</button>
+				<button class="music__genreBtn" value="metal">Metal</button>
+				<button class="music__genreBtn" value="rnb">RnB</button>
+				<button class="music__genreBtn" value="indie_alt">Indie/Alternative</button>
+				<button class="music__genreBtn" value="jazz">Jazz</button>
+				<button class="music__genreBtn" value="edm_dance">Electronic</button>
 			</div>
-			<select name="genreOtherSelect" id="music__GenreOtherSelect">
-				<!-- select options will be generated through spotify -->
+			<select name="genreOtherSelect" id="music__GenreOtherSelect" class="music__GenreOtherSelect">
+				<option selected="selected" value="other">Other</option>
+				<option value="workout">Workout</option>
+				<option value="sleep">Sleep</option>
 			</select>
 		</form>
 
@@ -102,6 +102,9 @@
 		</div>
 	</div>
 </section>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.min.js"></script>
+	<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALAOVJ8EJrA2C9SxcX9rB8-xPoAPXCuzk&libraries=places&callback=initAutocomplete"
+         async defer></script> -->
 	<script src="public/scripts/constants.js"></script>
 	<script src="public/scripts/main.js"></script>
 	<script src="public/scripts/script.js"></script>
