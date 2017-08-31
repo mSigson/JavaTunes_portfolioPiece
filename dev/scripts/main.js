@@ -1,4 +1,4 @@
-app = {
+const app = {
 	genre    : null,
 	duration : 60,
 	location : {
@@ -83,7 +83,8 @@ app.isResultsShowing = function(){
 // Maren
 app.createMusicGenreBtnListener = function(){
 
-	// -IF user picks <button class="music__genreBtn">... on click, 
+	$('.music__genreBtn').on('click', function (e){
+		e.preventDefault();
 			// -add class to selected button {music__genreBtn--selected}, 
 				app.addClassSelected(this);
 			// store value of selected input in app.genre
@@ -92,16 +93,19 @@ app.createMusicGenreBtnListener = function(){
 				app.removeClassSelected($(this).not());
 	//      -reset the <select class="genreOtherInput"> to default value
 				app.resetOtherGenreToDefault();
+	});
+};
+
+// Maren
+app.addClassSelected = function(selectedButton) {
+	console.log("hello");
+	// add class to selected button {music__genreBtn--selected}, 
+	$(selectedButton).addClass('music__genreBtn--selected');
 };
 
 // Maren
 app.storeGenreVal = function(){
 	// store value of selected input in app.genre
-};
-
-// Maren
-app.addClassSelected = function(selectedButton) {
-	// add class to selected button {music__genreBtn--selected}, 
 };
 
 // Maren
