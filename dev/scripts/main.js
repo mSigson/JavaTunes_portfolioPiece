@@ -221,7 +221,9 @@ app.showResults = function(){
 
 // Maren
 app.alertIncompleteForm = function(){
-// sweet alert message
+	if(app.genre === null){
+		swal("Form Incomplete", "Please pick a genre from the ones either listed or in the 'Other' menu");
+	}
 };
 
 // Fatin
