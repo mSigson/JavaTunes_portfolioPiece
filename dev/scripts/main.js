@@ -88,7 +88,7 @@ app.createMusicGenreBtnListener = function(){
 	$('.music__genreBtn').on('click', function (e){
 		e.preventDefault();
 			//remove the class of {music__genreBtn--selected} from all other buttons to this.not
-				app.removeClassSelected();
+				app.removeClassSelectedFromAllBtnsFromAllBtns();
 			// -add class to selected button {music__genreBtn--selected}, 
 				app.addClassSelected(this);
 			// store value of selected input in app.genre
@@ -98,7 +98,7 @@ app.createMusicGenreBtnListener = function(){
 	});
 };
 
-app.removeClassSelected = function(){
+app.removeClassSelectedFromAllBtns = function(){
 	// -remove the class of {music__genreBtn--selected} from all other buttons to this.not
 	$('.music__genreBtn').removeClass('music__genreBtn--selected');
 };
@@ -113,18 +113,27 @@ app.addClassSelected = function(selectedButton) {
 app.storeGenreVal = function(){
 	// store value of selected input in app.genre
 	app.genre = $('.music__genreBtn--selected').val();
+	console.log(app.genre);
 };
 
 // Maren
 app.resetOtherGenreToDefault = function(){
 // -reset the <select class="genreOtherInput"> to default value
-	
+	$('.music__GenreOtherSelect').val("other");
+	console.log($('#music__GenreOtherSelect').val());
 };
 
 // Maren
 app.createGenreOtherInputListener = function(){
 	 // -IF user selects <select class="music__genreOtherInput>", remove the class {music__genreBtn--selected} from all buttons, store value of selected input in app.genre
-	 	app.removeClassSelected($('.music__genreBtn'));
+
+	 $('select').on('change', function(){
+		 if($('#music__GenreOtherSelect').val() !== "other"){
+		 	app.removeClassSelectedFromAllBtns();
+		 	app.genre = $('#music__GenreOtherSelect').val();
+		 }
+	 });
+
 };
 
 //Fatin 
@@ -288,7 +297,7 @@ app.spotifyAuthorizationErrorHandle = function(err) {
 	}
 }
 
-app.getSpotifyToken = function () {
+app.getSpotifyToken = function (){
 	return $.ajax({
 		url: CONSTANTS.hackeryouProxyUrl,
 		method: 'POST',
