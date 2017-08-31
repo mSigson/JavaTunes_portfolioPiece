@@ -1,4 +1,4 @@
-app = {
+const app = {
 	genre    : null,
 	duration : 60,
 	location : {
@@ -10,7 +10,12 @@ app = {
 	coffeeShopLocationPromise: null,
 
 	spotifyHeader: {}, //for Spotify OAuth
+
+	client_id : 'RT3LKD5UVN1NHTLW20JOPKOLJEPNXGCDZFNRCZAH5UIJ5XNN',
+	client_secret : 'JK0QPEHBL5WHEUBISF1NGUXNPHF30F2QKYYNNU30PHVVEFMW',
+
 };
+
 
 app.init = function () {
 	// initialize the auto complete library

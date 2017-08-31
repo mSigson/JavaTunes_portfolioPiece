@@ -16,11 +16,11 @@ gulp.task('styles', () => {
 
 // a task to compile our js
 gulp.task('scripts', () => {
-	return gulp.src('.dev/scripts/main.js')
+	return gulp.src('./dev/scripts/**/*.js')
 		.pipe(babel({
 			presets: ['es2015']
 		}))
-		.pipe(gulp.dest('./public/scripts'))
+		.pipe(gulp.dest('./public/scripts/'))
 });
 
 
