@@ -9,6 +9,8 @@ const app = {
 	spotifyPlaylistPromise: null,
 	coffeeShopLocationPromise: null,
 
+	coffeeShopsInfo: {}, //TODO: remember to use this.
+
 	spotifyHeader: {}, //for Spotify OAuth
 };
 
@@ -179,10 +181,13 @@ app.hideLoadScreen = function(){
 };
 
 // TODO
+// Fatin
 app.displayMap = function(){
-	//needs to be broken down into subfunctions
+	//
+
 	// display markers
 		//create popups
+
 };
 
 // Fatin
