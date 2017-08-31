@@ -11,7 +11,7 @@ gulp.task('styles', () => {
     .pipe(sass().on('error', sass.logError))
     .pipe(autoprefixer('last 2 versions', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1'))
     .pipe(concat('style.css'))
-    .pipe(gulp.dest('./public/styles/'))
+    .pipe(gulp.dest('./public/styles/'));
 });
 
 // a task to compile our js
@@ -20,7 +20,7 @@ gulp.task('scripts', () => {
 		.pipe(babel({
 			presets: ['es2015']
 		}))
-		.pipe(gulp.dest('./public/scripts/'))
+		.pipe(gulp.dest('./public/scripts/'));
 });
 
 

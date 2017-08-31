@@ -8,6 +8,8 @@ const app = {
 	resultsDisplayed : false,
 	spotifyPlaylistPromise: null,
 	coffeeShopLocationPromise: null,
+	coffeeShopsInfo: [],
+	//objects inside coffeeShopsInfo{name:,website:,address:,phoneNum:}
 
 	spotifyHeader: {}, //for Spotify OAuth
 
@@ -15,6 +17,10 @@ const app = {
 	client_secret : 'JK0QPEHBL5WHEUBISF1NGUXNPHF30F2QKYYNNU30PHVVEFMW',
 
 };
+
+function getFirstElementFromArray(elem) {
+	return elem[0];
+}
 
 
 app.init = function () {
@@ -44,7 +50,10 @@ app.events = function () {
 
 // Jenn
 app.createLocationFormSubmitListener = function(){
-	// -on Submit EventListener
+	$('.landing__LocationForm').on('submit', function(e){
+	e.preventDefault();
+
+
         // -Do an AJAX call to FourSquare API.
         app.coffeeShopLocationPromise = app.getCoffeeShopLocation();
 
@@ -58,48 +67,90 @@ app.createLocationFormSubmitListener = function(){
         //    - smooth scroll to section results
         		app.scrollToResults();
         }
+
+     });
 };	
 
 // Jenn
 app.getCoffeeShopLocation = function(location){
 	// -Do an AJAX call to FourSquare API.
-	$.ajax({
+	return $.ajax({
 		url: 'https://api.foursquare.com/v2/venues/search?',
 		data: {
-			clientId: app.client_id,
-			clientSecret: app.client_secret,
+			client_id: app.client_id,
+			client_secret: app.client_secret,
 			format: 'json',
-			
-
-
+			v: '20170930',
+			query: 'coffee',
+			ll: '43.654416538795935, -79.40131094320991'
 		}
+	}).then(function(res){
+		let coffeeShopLocationsRes = res.response.venues;
+		// console.log(coffeeShopLocationsRes);
+
+		app.getCoffeeShopData(coffeeShopLocationsRes)
+
+
 	})
+
 };
+
+
+app.getCoffeeShopData = function(coffeeData) {
+	console.log(coffeeData);
+
+	coffeeData.forEach(function(data){
+		let name = data.name;
+		// console.log(coffeeShopName);
+
+		let phoneNum = data.contact.formattedPhone;
+		// console.log(coffeeShopPhoneNum);
+
+		let address = data.location.address;
+		// console.log(coffeeShopAddress);
+
+		let website = data.url;
+		// console.log(coffeeShopWebsite);
+
+		//  app.coffeeShopsInfo = [name, phoneNum, address, website]
+		// console.log(app.coffeeShopsInfo);
+	})
+}
+
 
 // Jenn
 app.scrollToMusic = function() {
 	// Smooth scroll to section music
+	$('html,body').animate({
+     scrollTop: $(".music").offset().top},
+     'slow');
 };
 
 // Jenn
 app.scrollToResults = function() {
 	// Smooth scroll to section results
+	$('html,body').animate({
+     scrollTop: $(".results").offset().top},
+     'slow');
 };
 
 // Jenn
 app.showMusic = function (){
 	// Set display: block for section music.
+	$('.music').show('slow');
 };
 
 // Jenn
 app.isResultsShowing = function(){
 	// must return true or false
+
 };
 
 // Maren
 app.createMusicGenreBtnListener = function(){
 
-	// -IF user picks <button class="music__genreBtn">... on click, 
+	$('.music__genreBtn').on('click', function (e){
+		e.preventDefault();
 			// -add class to selected button {music__genreBtn--selected}, 
 				app.addClassSelected(this);
 			// store value of selected input in app.genre
@@ -108,16 +159,19 @@ app.createMusicGenreBtnListener = function(){
 				app.removeClassSelected($(this).not());
 	//      -reset the <select class="genreOtherInput"> to default value
 				app.resetOtherGenreToDefault();
+	});
+};
+
+// Maren
+app.addClassSelected = function(selectedButton) {
+	console.log("hello");
+	// add class to selected button {music__genreBtn--selected}, 
+	$(selectedButton).addClass('music__genreBtn--selected');
 };
 
 // Maren
 app.storeGenreVal = function(){
 	// store value of selected input in app.genre
-};
-
-// Maren
-app.addClassSelected = function(selectedButton) {
-	// add class to selected button {music__genreBtn--selected}, 
 };
 
 // Maren
