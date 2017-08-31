@@ -9,9 +9,16 @@ const app = {
 	spotifyPlaylistPromise: null,
 	coffeeShopLocationPromise: null,
 
-	coffeeShopsInfo: {}, //TODO: remember to use this.
+	coffeeShopsInfo: [], //TODO: remember to use this.
+	//name, address, phoneNum, website
 
 	spotifyHeader: {}, //for Spotify OAuth
+	spotifyPlaylists: [],
+
+	// track num of playlists generated for user.
+	// if it equals to spotifyPlaylists.length
+	// this value will be reset to zero.
+	numOfPlaylistsGenerated: 0,
 };
 
 app.init = function () {
@@ -133,6 +140,8 @@ app.createMusicFormSubmitBtnListener = function(){
 			//- store the value of both inputs in minutes from {music__durationForm}, call this value app.duration
 			app.storeDurationVal();
 
+			app.genre = 'rock'; // TODO: delete
+
 			//-if the value of variable app.genre is =null, sweet alert message
 				if(app.genreIsNull()) {
 					app.alertIncompleteForm();
@@ -182,7 +191,8 @@ app.hideLoadScreen = function(){
 // TODO
 // Fatin
 app.displayMap = function(){
-	//
+	//display markers
+
 
 	// display markers
 		//create popups
@@ -190,18 +200,78 @@ app.displayMap = function(){
 };
 
 // Fatin
+// TODO
 app.displaySpotifyPlaylist = function(){
-	//TODO
-	$('.results__playlist').show();
-	console.log('app.displaySpotifyPlaylist not coded.');
+	// const $playlistContainer = $('.results__playlist');
+
+	// const uri = app.pickSpotifyPlaylistUri();
+	// const $domElement = app.createPlaylistDom(uri);
+
+	// $playlistContainer.empty();
+	// $playlistContainer.append('CATNIP');
+	// $playlistContainer.append( $($domElement) );
+	// $playlistContainer.show();
+};
+
+// Fatin
+app.pickSpotifyPlaylistUri = function() {
+	const uri = app.spotifyPlaylists[app.numOfPlaylistsGenerated++].uri;
+
+	if ( app.isSpotifyPlaylistsExhausted() ) {
+		app.getSpotifyPlaylist();
+	}
+
+	return uri;
+};
+
+app.isSpotifyPlaylistsExhausted = function() {
+	return app.numOfPlaylistsGenerated >= app.spotifyPlaylists.length;
+};
+
+// Fatin
+app.createPlaylistDom = function(uri) {
+	console.log('spotify playlist dom created.');
+
+	console.log(`<iframe src="${CONSTANTS.spotifyEmbeddedBaseUrl}?uri=${uri}&theme=${CONSTANTS.spotifyEmbeddedThemeColor}" width="${CONSTANTS.spotifyEmbeddedWidth}" height="${CONSTANTS.spotifyEmbeddedHeight}" frameborder="0" allowtransparency="true"></iframe>`);
+
+	return 
+		`<iframe src="${CONSTANTS.spotifyEmbeddedBaseUrl}?uri=${uri}&theme=${CONSTANTS.spotifyEmbeddedThemeColor}" width="${CONSTANTS.spotifyEmbeddedWidth}" height="${CONSTANTS.spotifyEmbeddedHeight}" frameborder="0" allowtransparency="true"></iframe>`
 };
 
 // Fatin
 app.getSpotifyPlaylist = function(){
-	console.log('app.getSpotifyPlaylist not coded.'); 
  // - call Spotify AJAX function
-	return Promise.then( () => { return {}; } );
- 	
+	return $.ajax({
+		url: `${CONSTANTS.spotifyPlaylistsBaseUrl}${app.genre}/playlists?limit=${CONSTANTS.numOfPlaylistLimit}`,
+		method: 'GET',
+		headers: app.spotifyHeader,
+		data: {},
+	})
+	.then( (res) => {
+		app.clearSpotifyPlaylists();
+		app.spotifyPlaylists = app.responseToSpotifyPlaylist(res);
+	})
+	.catch( app.spotifyErrorHandle );
+};
+
+// Fatin
+app.responseToSpotifyPlaylist = function(res) {
+	const spotifyPlaylists = [];
+
+	for(let item of res.playlists.items) {
+		spotifyPlaylists.push({
+			id: item.id,
+			uri: item.uri,
+			loaded: false, //state check if user loaded it.
+		});
+	}
+
+	return spotifyPlaylists;
+};
+
+// Fatin
+app.clearSpotifyPlaylists = function() {
+	app.spotifyPlaylists = [];
 };
 
 // Fatin
@@ -275,15 +345,18 @@ app.setSpotifyAuthorization = function() {
 				});
 }
 
-app.spotifyAuthorizationErrorHandle = function(err) {
-	//if the token is no longer valid, redo authorization
-	if (err.status === 401) {
-		return app.setSpotifyAuthorization();
+app.spotifyErrorHandle = function(err) {
+	if(err.status !== undefined) {
+		if (err.status === 401) {
+			return app.setSpotifyAuthorization();
+		} else {
+			console.log('Spotify API HTTP Error:', err.status);
+			
+			//pass on a Promise with the error.
+			return new Promise().catch( (err) => err ); 	
+		}
 	} else {
-		console.log('Spotify API HTTP Error:', err.status);
-		//pass on a Promise with the error.
-		return $.Deferred.catch( (err) => err ); 
-		
+		console.log('Error in handling of Spotify response.');
 	}
 }
 
@@ -310,3 +383,24 @@ app.setSpotifyHeader = function (tokenType, accessToken) {
 		'Authorization': `${tokenType} ${accessToken}`
 	}
 };
+
+// app.createSpotifyPlaylist = function() {
+// 	//getSpotify tracks
+// 	app.getSpotifyTracks()
+// 		.then( () => app.generatePlaylist );
+// };
+
+// app.generatePlaylist = function() {
+// 	console.log(app.potentialTracks);
+// };
+
+// app.getSpotifyTracks = function() {
+// 	return $.ajax({
+// 				url: 'https://api.spotify.com/v1/recommendations/available-genre-seeds',
+// 				method: 'GET',
+// 				headers: app.spotifyHeader,
+// 				data: {},
+// 			})
+// 			.then( (res) => console.log(res) )
+// 			.catch( app.spotifyAuthorizationErrorHandle );
+// };
