@@ -16,10 +16,10 @@ const app = {
 
 app.init = function () {
 	// initialize the auto complete library
-	app.initLocationInput();
+	// app.initLocationInput();
 	app.events();
-
 	app.setSpotifyAuthorization();
+
 }
 
 app.events = function () {
@@ -87,20 +87,24 @@ app.createMusicGenreBtnListener = function(){
 
 	$('.music__genreBtn').on('click', function (e){
 		e.preventDefault();
+			//remove the class of {music__genreBtn--selected} from all other buttons to this.not
+				app.removeClassSelectedFromAllBtns();
 			// -add class to selected button {music__genreBtn--selected}, 
 				app.addClassSelected(this);
 			// store value of selected input in app.genre
 				app.storeGenreVal();
-	//      -remove the class of {music__genreBtn--selected} from all other buttons to this.not
-				app.removeClassSelected($(this).not());
-	//      -reset the <select class="genreOtherInput"> to default value
+			// reset the <select class="genreOtherInput"> to default value
 				app.resetOtherGenreToDefault();
 	});
 };
 
+app.removeClassSelectedFromAllBtns = function(){
+	// -remove the class of {music__genreBtn--selected} from all other buttons to this.not
+	$('.music__genreBtn').removeClass('music__genreBtn--selected');
+};
+
 // Maren
 app.addClassSelected = function(selectedButton) {
-	console.log("hello");
 	// add class to selected button {music__genreBtn--selected}, 
 	$(selectedButton).addClass('music__genreBtn--selected');
 };
@@ -108,22 +112,27 @@ app.addClassSelected = function(selectedButton) {
 // Maren
 app.storeGenreVal = function(){
 	// store value of selected input in app.genre
-};
-
-// Maren
-app.removeClassSelected = function(unselectedButtons){
-	// -remove the class of {music__genreBtn--selected} from all other buttons to this.not
+	app.genre = $('.music__genreBtn--selected').val();
 };
 
 // Maren
 app.resetOtherGenreToDefault = function(){
 // -reset the <select class="genreOtherInput"> to default value
+	$('.music__GenreOtherSelect option').prop('selected', function() {
+        return this.defaultSelected;
+    });
 };
 
 // Maren
 app.createGenreOtherInputListener = function(){
 	 // -IF user selects <select class="music__genreOtherInput>", remove the class {music__genreBtn--selected} from all buttons, store value of selected input in app.genre
-	 	app.removeClassSelected($('.music__genreBtn'));
+
+	 $('select').on('change', function(){
+		 if($('#music__GenreOtherSelect').val() !== "other"){
+		 	app.removeClassSelectedFromAllBtns();
+		 	app.genre = $('#music__GenreOtherSelect').val();
+		 }
+	 });
 };
 
 //Fatin 
@@ -186,7 +195,6 @@ app.displayMap = function(){
 
 	// display markers
 		//create popups
-
 };
 
 // Fatin
@@ -212,7 +220,15 @@ app.showResults = function(){
 
 // Maren
 app.alertIncompleteForm = function(){
-// sweet alert message
+	if(app.genre === null){
+		sweetAlert({
+	         title: 'Incomplete',
+	         text: 'Please pick from either the genres provided or from the "Other" menu.',
+	         type: 'error',
+	         allowEscapeKey: 'true',
+	         showConfirmButton: true
+	    });
+	}
 };
 
 // Fatin
@@ -258,12 +274,13 @@ app.scrollToLanding = function(){
 
 };
 
-
 // Maren
 //  - initialize the auto complete library
 app.initLocationInput = function () {
-
+	app.initAutocomplete()
+	
 };
+
 
 /********** Spotify API Related Functions ***********/
 
@@ -287,7 +304,7 @@ app.spotifyAuthorizationErrorHandle = function(err) {
 	}
 }
 
-app.getSpotifyToken = function () {
+app.getSpotifyToken = function (){
 	return $.ajax({
 		url: CONSTANTS.hackeryouProxyUrl,
 		method: 'POST',
