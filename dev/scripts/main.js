@@ -11,10 +11,20 @@ const app = {
 	coffeeShopsInfo: [],
 	//objects inside coffeeShopsInfo{name:,website:,address:,phoneNum:}
 
+	coffeeShopsInfo: [], //TODO: remember to use this.
+	//name, address, phoneNum, website
+
 	spotifyHeader: {}, //for Spotify OAuth
 
 	client_id : 'RT3LKD5UVN1NHTLW20JOPKOLJEPNXGCDZFNRCZAH5UIJ5XNN',
 	client_secret : 'JK0QPEHBL5WHEUBISF1NGUXNPHF30F2QKYYNNU30PHVVEFMW',
+
+	spotifyPlaylists: [],
+
+	// track num of playlists generated for user.
+	// if it equals to spotifyPlaylists.length
+	// this value will be reset to zero.
+	numOfPlaylistsGenerated: 0,
 
 };
 
@@ -25,10 +35,10 @@ function getFirstElementFromArray(elem) {
 
 app.init = function () {
 	// initialize the auto complete library
-	app.initLocationInput();
+	// app.initLocationInput();
 	app.events();
-
 	app.setSpotifyAuthorization();
+
 }
 
 app.events = function () {
@@ -151,20 +161,24 @@ app.createMusicGenreBtnListener = function(){
 
 	$('.music__genreBtn').on('click', function (e){
 		e.preventDefault();
+			//remove the class of {music__genreBtn--selected} from all other buttons to this.not
+				app.removeClassSelectedFromAllBtns();
 			// -add class to selected button {music__genreBtn--selected}, 
 				app.addClassSelected(this);
 			// store value of selected input in app.genre
 				app.storeGenreVal();
-	//      -remove the class of {music__genreBtn--selected} from all other buttons to this.not
-				app.removeClassSelected($(this).not());
-	//      -reset the <select class="genreOtherInput"> to default value
+			// reset the <select class="genreOtherInput"> to default value
 				app.resetOtherGenreToDefault();
 	});
 };
 
+app.removeClassSelectedFromAllBtns = function(){
+	// -remove the class of {music__genreBtn--selected} from all other buttons to this.not
+	$('.music__genreBtn').removeClass('music__genreBtn--selected');
+};
+
 // Maren
 app.addClassSelected = function(selectedButton) {
-	console.log("hello");
 	// add class to selected button {music__genreBtn--selected}, 
 	$(selectedButton).addClass('music__genreBtn--selected');
 };
@@ -172,22 +186,27 @@ app.addClassSelected = function(selectedButton) {
 // Maren
 app.storeGenreVal = function(){
 	// store value of selected input in app.genre
-};
-
-// Maren
-app.removeClassSelected = function(unselectedButtons){
-	// -remove the class of {music__genreBtn--selected} from all other buttons to this.not
+	app.genre = $('.music__genreBtn--selected').val();
 };
 
 // Maren
 app.resetOtherGenreToDefault = function(){
 // -reset the <select class="genreOtherInput"> to default value
+	$('.music__GenreOtherSelect option').prop('selected', function() {
+        return this.defaultSelected;
+    });
 };
 
 // Maren
 app.createGenreOtherInputListener = function(){
 	 // -IF user selects <select class="music__genreOtherInput>", remove the class {music__genreBtn--selected} from all buttons, store value of selected input in app.genre
-	 	app.removeClassSelected($('.music__genreBtn'));
+
+	 $('select').on('change', function(){
+		 if($('#music__GenreOtherSelect').val() !== "other"){
+		 	app.removeClassSelectedFromAllBtns();
+		 	app.genre = $('#music__GenreOtherSelect').val();
+		 }
+	 });
 };
 
 //Fatin 
@@ -196,6 +215,8 @@ app.createMusicFormSubmitBtnListener = function(){
 		$('.music__musicFormSubmitBtn').on('click', function() {
 			//- store the value of both inputs in minutes from {music__durationForm}, call this value app.duration
 			app.storeDurationVal();
+
+			app.genre = 'rock'; // TODO: delete
 
 			//-if the value of variable app.genre is =null, sweet alert message
 				if(app.genreIsNull()) {
@@ -244,25 +265,88 @@ app.hideLoadScreen = function(){
 };
 
 // TODO
+// Fatin
 app.displayMap = function(){
-	//needs to be broken down into subfunctions
+	//display markers
+
+
 	// display markers
 		//create popups
 };
 
 // Fatin
+// TODO
 app.displaySpotifyPlaylist = function(){
-	//TODO
-	$('.results__playlist').show();
-	console.log('app.displaySpotifyPlaylist not coded.');
+	// const $playlistContainer = $('.results__playlist');
+
+	// const uri = app.pickSpotifyPlaylistUri();
+	// const $domElement = app.createPlaylistDom(uri);
+
+	// $playlistContainer.empty();
+	// $playlistContainer.append('CATNIP');
+	// $playlistContainer.append( $($domElement) );
+	// $playlistContainer.show();
+};
+
+// Fatin
+app.pickSpotifyPlaylistUri = function() {
+	const uri = app.spotifyPlaylists[app.numOfPlaylistsGenerated++].uri;
+
+	if ( app.isSpotifyPlaylistsExhausted() ) {
+		app.getSpotifyPlaylist();
+	}
+
+	return uri;
+};
+
+app.isSpotifyPlaylistsExhausted = function() {
+	return app.numOfPlaylistsGenerated >= app.spotifyPlaylists.length;
+};
+
+// Fatin
+app.createPlaylistDom = function(uri) {
+	console.log('spotify playlist dom created.');
+
+	console.log(`<iframe src="${CONSTANTS.spotifyEmbeddedBaseUrl}?uri=${uri}&theme=${CONSTANTS.spotifyEmbeddedThemeColor}" width="${CONSTANTS.spotifyEmbeddedWidth}" height="${CONSTANTS.spotifyEmbeddedHeight}" frameborder="0" allowtransparency="true"></iframe>`);
+
+	return 
+		`<iframe src="${CONSTANTS.spotifyEmbeddedBaseUrl}?uri=${uri}&theme=${CONSTANTS.spotifyEmbeddedThemeColor}" width="${CONSTANTS.spotifyEmbeddedWidth}" height="${CONSTANTS.spotifyEmbeddedHeight}" frameborder="0" allowtransparency="true"></iframe>`
 };
 
 // Fatin
 app.getSpotifyPlaylist = function(){
-	console.log('app.getSpotifyPlaylist not coded.'); 
  // - call Spotify AJAX function
-	return Promise.then( () => { return {}; } );
- 	
+	return $.ajax({
+		url: `${CONSTANTS.spotifyPlaylistsBaseUrl}${app.genre}/playlists?limit=${CONSTANTS.numOfPlaylistLimit}`,
+		method: 'GET',
+		headers: app.spotifyHeader,
+		data: {},
+	})
+	.then( (res) => {
+		app.clearSpotifyPlaylists();
+		app.spotifyPlaylists = app.responseToSpotifyPlaylist(res);
+	})
+	.catch( app.spotifyErrorHandle );
+};
+
+// Fatin
+app.responseToSpotifyPlaylist = function(res) {
+	const spotifyPlaylists = [];
+
+	for(let item of res.playlists.items) {
+		spotifyPlaylists.push({
+			id: item.id,
+			uri: item.uri,
+			loaded: false, //state check if user loaded it.
+		});
+	}
+
+	return spotifyPlaylists;
+};
+
+// Fatin
+app.clearSpotifyPlaylists = function() {
+	app.spotifyPlaylists = [];
 };
 
 // Fatin
@@ -273,7 +357,15 @@ app.showResults = function(){
 
 // Maren
 app.alertIncompleteForm = function(){
-// sweet alert message
+	if(app.genre === null){
+		sweetAlert({
+	         title: 'Incomplete',
+	         text: 'Please pick from either the genres provided or from the "Other" menu.',
+	         type: 'error',
+	         allowEscapeKey: 'true',
+	         showConfirmButton: true
+	    });
+	}
 };
 
 // Fatin
@@ -319,12 +411,13 @@ app.scrollToLanding = function(){
 
 };
 
-
 // Maren
 //  - initialize the auto complete library
 app.initLocationInput = function () {
-
+	app.initAutocomplete()
+	
 };
+
 
 /********** Spotify API Related Functions ***********/
 
@@ -336,19 +429,22 @@ app.setSpotifyAuthorization = function() {
 				});
 }
 
-app.spotifyAuthorizationErrorHandle = function(err) {
-	//if the token is no longer valid, redo authorization
-	if (err.status === 401) {
-		return app.setSpotifyAuthorization();
+app.spotifyErrorHandle = function(err) {
+	if(err.status !== undefined) {
+		if (err.status === 401) {
+			return app.setSpotifyAuthorization();
+		} else {
+			console.log('Spotify API HTTP Error:', err.status);
+			
+			//pass on a Promise with the error.
+			return new Promise().catch( (err) => err ); 	
+		}
 	} else {
-		console.log('Spotify API HTTP Error:', err.status);
-		//pass on a Promise with the error.
-		return $.Deferred.catch( (err) => err ); 
-		
+		console.log('Error in handling of Spotify response.');
 	}
 }
 
-app.getSpotifyToken = function () {
+app.getSpotifyToken = function (){
 	return $.ajax({
 		url: CONSTANTS.hackeryouProxyUrl,
 		method: 'POST',
@@ -371,3 +467,24 @@ app.setSpotifyHeader = function (tokenType, accessToken) {
 		'Authorization': `${tokenType} ${accessToken}`
 	}
 };
+
+// app.createSpotifyPlaylist = function() {
+// 	//getSpotify tracks
+// 	app.getSpotifyTracks()
+// 		.then( () => app.generatePlaylist );
+// };
+
+// app.generatePlaylist = function() {
+// 	console.log(app.potentialTracks);
+// };
+
+// app.getSpotifyTracks = function() {
+// 	return $.ajax({
+// 				url: 'https://api.spotify.com/v1/recommendations/available-genre-seeds',
+// 				method: 'GET',
+// 				headers: app.spotifyHeader,
+// 				data: {},
+// 			})
+// 			.then( (res) => console.log(res) )
+// 			.catch( app.spotifyAuthorizationErrorHandle );
+// };
