@@ -26,8 +26,47 @@
 <section class="music">
 	<div class="wrapper">
 		<form action="" class="music__durationForm">
-			<label for=""></label>
+			<p>How Long?</p>
+			<label for="durationHoursSelect" class="music__durationHoursLabel" >Hours</label>
+			<select name="durationHoursSelect" class="music__durationHoursSelect">
+			    <option value="0" selected>0 Hours</option>
+			    <option value="60">1 Hour</option>
+			    <option value="120">2 Hours</option>
+			    <option value="180">3 Hours</option>
+			    <option value="240">4 Hours</option>
+			    <option value="300">5 Hours</option>
+			    <option value="360">6 Hours</option>
+			    <option value="420">7 Hours</option>
+			    <option value="480">8 Hours</option>
+			    <option value="540">9 Hours</option>
+			    <option value="600">10 Hours</option>
+			</select>
+			<label for="durationMinutesSelect" class="music__durationMinutesLabel" >Minutes</label>
+			<select name="durationMinutesSelect" class="music__durationMinutesSelect">
+			    <option value="0">0 Minutes</option>
+			    <option value="15">15 Minutes</option>
+			    <option value="30" selected>30 Minutes</option>
+			    <option value="45">45 Minutes</option>
+			</select>
 		</form>
+
+		<form action="" class="music__genreForm">
+			<div class="music__genreBtnContainer">
+				<button class="music__genreBtn">Rock</button>
+				<button class="music__genreBtn">Pop</button>
+				<button class="music__genreBtn">Alternative</button>
+				<button class="music__genreBtn">Country</button>
+				<button class="music__genreBtn">Classical</button>
+				<button class="music__genreBtn">Indie</button>
+				<button class="music__genreBtn">Jazz</button>
+				<button class="music__genreBtn">Electronic</button>
+			</div>
+			<select name="genreOtherSelect" id="music__GenreOtherSelect">
+				<!-- select options will be generated through spotify -->
+			</select>
+		</form>
+
+		<button class="music__musicFormSubmitBtn">Get My Playlist</button>
 	</div>
 </section>
 
