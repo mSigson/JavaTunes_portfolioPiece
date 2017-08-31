@@ -20,7 +20,11 @@ gulp.task('scripts', () => {
 		.pipe(babel({
 			presets: ['es2015']
 		}))
+<<<<<<< HEAD
 		.pipe(gulp.dest('./public/scripts'));
+=======
+		.pipe(gulp.dest('./public/scripts/'));
+>>>>>>> ccbbece79af11bc57ec204a09db8fb2daffa7612
 });
 
 
