@@ -88,13 +88,14 @@ app.createMusicGenreBtnListener = function(){
 	$('.music__genreBtn').on('click', function (e){
 		e.preventDefault();
 			//remove the class of {music__genreBtn--selected} from all other buttons to this.not
-				app.removeClassSelectedFromAllBtnsFromAllBtns();
+				app.removeClassSelectedFromAllBtns();
 			// -add class to selected button {music__genreBtn--selected}, 
 				app.addClassSelected(this);
 			// store value of selected input in app.genre
 				app.storeGenreVal();
 			// reset the <select class="genreOtherInput"> to default value
 				app.resetOtherGenreToDefault();
+				console.log(app.genre);
 	});
 };
 
@@ -113,14 +114,14 @@ app.addClassSelected = function(selectedButton) {
 app.storeGenreVal = function(){
 	// store value of selected input in app.genre
 	app.genre = $('.music__genreBtn--selected').val();
-	console.log(app.genre);
 };
 
 // Maren
 app.resetOtherGenreToDefault = function(){
 // -reset the <select class="genreOtherInput"> to default value
-	$('.music__GenreOtherSelect').val("other");
-	console.log($('#music__GenreOtherSelect').val());
+	$('.music__GenreOtherSelect option').prop('selected', function() {
+        return this.defaultSelected;
+    });
 };
 
 // Maren
@@ -131,6 +132,7 @@ app.createGenreOtherInputListener = function(){
 		 if($('#music__GenreOtherSelect').val() !== "other"){
 		 	app.removeClassSelectedFromAllBtns();
 		 	app.genre = $('#music__GenreOtherSelect').val();
+		 	console.log(app.genre);
 		 }
 	 });
 };
@@ -195,7 +197,6 @@ app.displayMap = function(){
 
 	// display markers
 		//create popups
-
 };
 
 // Fatin
@@ -222,7 +223,13 @@ app.showResults = function(){
 // Maren
 app.alertIncompleteForm = function(){
 	if(app.genre === null){
-		swal("Form Incomplete", "Please pick a genre from the ones either listed or in the 'Other' menu");
+		sweetAlert({
+	         title: 'Incomplete',
+	         text: 'Please pick from either the genres provided or from the "Other" menu.',
+	         type: 'error',
+	         allowEscapeKey: 'true',
+	         showConfirmButton: true
+	    });
 	}
 };
 
@@ -269,11 +276,10 @@ app.scrollToLanding = function(){
 
 };
 
-
 // Maren
 //  - initialize the auto complete library
 app.initLocationInput = function () {
-
+	
 };
 
 /********** Spotify API Related Functions ***********/
