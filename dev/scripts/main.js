@@ -85,20 +85,24 @@ app.createMusicGenreBtnListener = function(){
 
 	$('.music__genreBtn').on('click', function (e){
 		e.preventDefault();
+			//remove the class of {music__genreBtn--selected} from all other buttons to this.not
+				app.removeClassSelected();
 			// -add class to selected button {music__genreBtn--selected}, 
 				app.addClassSelected(this);
 			// store value of selected input in app.genre
 				app.storeGenreVal();
-	//      -remove the class of {music__genreBtn--selected} from all other buttons to this.not
-				app.removeClassSelected($(this).not());
-	//      -reset the <select class="genreOtherInput"> to default value
+			// reset the <select class="genreOtherInput"> to default value
 				app.resetOtherGenreToDefault();
 	});
 };
 
+app.removeClassSelected = function(){
+	// -remove the class of {music__genreBtn--selected} from all other buttons to this.not
+	$('.music__genreBtn').removeClass('music__genreBtn--selected');
+};
+
 // Maren
 app.addClassSelected = function(selectedButton) {
-	console.log("hello");
 	// add class to selected button {music__genreBtn--selected}, 
 	$(selectedButton).addClass('music__genreBtn--selected');
 };
@@ -106,16 +110,13 @@ app.addClassSelected = function(selectedButton) {
 // Maren
 app.storeGenreVal = function(){
 	// store value of selected input in app.genre
-};
-
-// Maren
-app.removeClassSelected = function(unselectedButtons){
-	// -remove the class of {music__genreBtn--selected} from all other buttons to this.not
+	app.genre = $('.music__genreBtn--selected').val();
 };
 
 // Maren
 app.resetOtherGenreToDefault = function(){
 // -reset the <select class="genreOtherInput"> to default value
+	
 };
 
 // Maren
