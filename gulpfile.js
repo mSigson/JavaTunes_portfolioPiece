@@ -3,6 +3,7 @@ const sass = require('gulp-sass');
 const concat = require('gulp-concat');
 const babel = require('gulp-babel');
 const autoprefixer = require('gulp-autoprefixer');
+const plumber = require('gulp-plumber');
 
 // a task to compile our sass
 
@@ -17,6 +18,7 @@ gulp.task('styles', () => {
 // a task to compile our js
 gulp.task('scripts', () => {
 	return gulp.src('./dev/scripts/**/*.js')
+    .pipe(plumber())
 		.pipe(babel({
 			presets: ['es2015']
 		}))
