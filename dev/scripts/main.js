@@ -133,7 +133,6 @@ app.createGenreOtherInputListener = function(){
 		 	app.genre = $('#music__GenreOtherSelect').val();
 		 }
 	 });
-
 };
 
 //Fatin 
