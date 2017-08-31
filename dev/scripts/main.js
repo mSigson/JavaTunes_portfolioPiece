@@ -151,7 +151,6 @@ app.createMusicFormSubmitBtnListener = function(){
 								app.hideLoadIndicator();
 			//                - set {results__loadErrorMsg} to display block
 								app.showErrorMsg();
-								
 							});
 
 
