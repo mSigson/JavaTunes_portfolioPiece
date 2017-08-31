@@ -8,18 +8,30 @@ const app = {
 	resultsDisplayed : false,
 	spotifyPlaylistPromise: null,
 	coffeeShopLocationPromise: null,
+	coffeeShopsInfo: [],
+	//objects inside coffeeShopsInfo{name:,website:,address:,phoneNum:}
 
 	coffeeShopsInfo: [], //TODO: remember to use this.
 	//name, address, phoneNum, website
 
 	spotifyHeader: {}, //for Spotify OAuth
+
+	client_id : 'RT3LKD5UVN1NHTLW20JOPKOLJEPNXGCDZFNRCZAH5UIJ5XNN',
+	client_secret : 'JK0QPEHBL5WHEUBISF1NGUXNPHF30F2QKYYNNU30PHVVEFMW',
+
 	spotifyPlaylists: [],
 
 	// track num of playlists generated for user.
 	// if it equals to spotifyPlaylists.length
 	// this value will be reset to zero.
 	numOfPlaylistsGenerated: 0,
+
 };
+
+function getFirstElementFromArray(elem) {
+	return elem[0];
+}
+
 
 app.init = function () {
 	// initialize the auto complete library
@@ -48,7 +60,10 @@ app.events = function () {
 
 // Jenn
 app.createLocationFormSubmitListener = function(){
-	// -on Submit EventListener
+	$('.landing__LocationForm').on('submit', function(e){
+	e.preventDefault();
+
+
         // -Do an AJAX call to FourSquare API.
         app.coffeeShopLocationPromise = app.getCoffeeShopLocation();
 
@@ -62,31 +77,83 @@ app.createLocationFormSubmitListener = function(){
         //    - smooth scroll to section results
         		app.scrollToResults();
         }
+
+     });
 };	
 
 // Jenn
-app.getCoffeeShopLocation = function(){
+app.getCoffeeShopLocation = function(location){
 	// -Do an AJAX call to FourSquare API.
+	return $.ajax({
+		url: 'https://api.foursquare.com/v2/venues/search?',
+		data: {
+			client_id: app.client_id,
+			client_secret: app.client_secret,
+			format: 'json',
+			v: '20170930',
+			query: 'coffee',
+			ll: '43.654416538795935, -79.40131094320991'
+		}
+	}).then(function(res){
+		let coffeeShopLocationsRes = res.response.venues;
+		// console.log(coffeeShopLocationsRes);
+
+		app.getCoffeeShopData(coffeeShopLocationsRes)
+
+
+	})
+
 };
+
+
+app.getCoffeeShopData = function(coffeeData) {
+	console.log(coffeeData);
+
+	coffeeData.forEach(function(data){
+		let name = data.name;
+		// console.log(coffeeShopName);
+
+		let phoneNum = data.contact.formattedPhone;
+		// console.log(coffeeShopPhoneNum);
+
+		let address = data.location.address;
+		// console.log(coffeeShopAddress);
+
+		let website = data.url;
+		// console.log(coffeeShopWebsite);
+
+		//  app.coffeeShopsInfo = [name, phoneNum, address, website]
+		// console.log(app.coffeeShopsInfo);
+	})
+}
+
 
 // Jenn
 app.scrollToMusic = function() {
 	// Smooth scroll to section music
+	$('html,body').animate({
+     scrollTop: $(".music").offset().top},
+     'slow');
 };
 
 // Jenn
 app.scrollToResults = function() {
 	// Smooth scroll to section results
+	$('html,body').animate({
+     scrollTop: $(".results").offset().top},
+     'slow');
 };
 
 // Jenn
 app.showMusic = function (){
 	// Set display: block for section music.
+	$('.music').show('slow');
 };
 
 // Jenn
 app.isResultsShowing = function(){
 	// must return true or false
+
 };
 
 // Maren
