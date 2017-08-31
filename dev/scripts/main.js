@@ -8,12 +8,16 @@ app = {
 	resultsDisplayed : false,
 	spotifyPlaylistPromise: null,
 	coffeeShopLocationPromise: null,
+
+	spotifyHeader: {}, //for Spotify OAuth
 };
 
 app.init = function () {
 	// initialize the auto complete library
 	app.initLocationInput();
 	app.events();
+
+	app.setSpotifyAuthorization();
 }
 
 app.events = function () {
@@ -119,52 +123,55 @@ app.createGenreOtherInputListener = function(){
 //Fatin 
 app.createMusicFormSubmitBtnListener = function(){
 		// -on {music__musicFormSubmitBtn}, click,
+		$('.music__musicFormSubmitBtn').on('click', function() {
+			//- store the value of both inputs in minutes from {music__durationForm}, call this value app.duration
+			app.storeDurationVal();
 
-	 //        - store the value of both inputs in minutes from {music__durationForm}, call this value app.duration
-	 app.storeDurationVal();
+			//-if the value of variable app.genre is =null, sweet alert message
+				if(app.genreIsNull()) {
+					app.alertIncompleteForm();
 
-	 //        -if the value of variable app.genre is =null, sweet alert message
-	 	if(app.genreIsNull()) {
-	 		app.alertIncompleteForm();
+				} else {
+					app.showResults();
+					app.scrollToResults();
+					app.spotifyPlaylistPromise = app.getSpotifyPlaylist();
+						$.when(app.spotifyPlaylistPromise, app.coffeeShopLocationPromise)
+							.then( (spotifyRes, coffeeShopLocationRes) => {
+								//TODO: Need to add response handles.
+								
+			//                - display spotify playlist (function)
+								app.displaySpotifyPlaylist();
+			//                - display map, CONSTANTS.numOfLocations, (function)
+								app.displayMap();
+			//                - set {results__loadScreen} to display none
+								app.hideLoadScreen();
 
-	 	}else {
-	 		app.showResults();
-	 		app.scrollToResults();
-	 		app.spotifyPlaylistPromise = app.getSpotifyPlaylist();
-	 			$.when(app.spotifyPlaylistPromise, app.coffeeShopLocationPromise)
-	 				.then( (spotifyRes, coffeeShopLocationRes) => {
-	 //                - display spotify playlist (function)
-	 					app.displaySpotifyPlaylist();
-	 //                - display map, CONSTANTS.numOfLocations, (function)
-	 					app.displayMap();
-	 //                - set {results__loadScreen} to display none
-	 					app.hideLoadScreen();
-
-	 				}).fail((err) =>{
-	 //                - set {results__loadIndicator} to display none
-	 					app.hideLoadIndicator();
-	 //                - set {results__loadErrorMsg} to display block
-	 					app.showErrorMsg();
-	 					
-	 				});
+							}).fail((err) =>{
+			//                - set {results__loadIndicator} to display none
+								app.hideLoadIndicator();
+			//                - set {results__loadErrorMsg} to display block
+								app.showErrorMsg();
+								
+							});
 
 
-	 	}
+				}
+		});
 };
 
 // Fatin
 app.showErrorMsg = function(){
-
+	$('.results__loadErrorMsg').show();
 };
 
 // Fatin
 app.hideLoadIndicator = function(){
-
+	$('.results__loadIndicator').hide();
 };
 
 // Fatin
 app.hideLoadScreen = function(){
-
+	$('.results__loadScreen').hide();
 };
 
 // TODO
@@ -176,17 +183,23 @@ app.displayMap = function(){
 
 // Fatin
 app.displaySpotifyPlaylist = function(){
-
+	//TODO
+	$('.results__playlist').show();
+	console.log('app.displaySpotifyPlaylist not coded.');
 };
 
 // Fatin
 app.getSpotifyPlaylist = function(){
+	console.log('app.getSpotifyPlaylist not coded.'); 
  // - call Spotify AJAX function
+	return Promise.then( () => { return {}; } );
+ 	
 };
 
 // Fatin
 app.showResults = function(){
- //set <section class="results"> display block.
+	//set <section class="results"> display block.
+	$('.results').show();
 };
 
 // Maren
@@ -197,6 +210,7 @@ app.alertIncompleteForm = function(){
 // Fatin
 app.genreIsNull = function(){
 // must return true or false
+	return app.genre === null;
 };
 
 // Jenn
@@ -209,19 +223,26 @@ app.storeDurationVal = function(){
 // on results__reloadBtn click
 app.createReloadBtnListener = function(){
 	// error message reload button (have yet to put into html context)
+	$('.results__reloadBtn').on('click', function() {
+		console.log('createReloadBtnListener function needs to be complete.');
+	});
 };
 
 // Fatin
 // on results__changeMusicBtn click
 app.createChangeMusicBtnListener = function(){
-	// - smooth scroll up to music section.
-	app.scrollToMusic();
+	$('.results__changeMusicBtn').on('click', function() {
+		// - smooth scroll up to music section.
+		app.scrollToMusic();
+	});
 };
 
 // on results__changeLocationBtn click
 app.createChangeLocationBtnListener = function(){
-	// -smooth scroll up to landing section.
-	app.scrollToLanding();
+	$('.results__changeLocationBtn').on('click', function() {
+		// -smooth scroll up to landing section.
+		app.scrollToLanding();
+	});
 };
 
 // Jenn
@@ -234,4 +255,50 @@ app.scrollToLanding = function(){
 //  - initialize the auto complete library
 app.initLocationInput = function () {
 
+};
+
+/********** Spotify API Related Functions ***********/
+
+//Main method to get token and set the header for Spotify OAuth.
+app.setSpotifyAuthorization = function() {
+	return app.getSpotifyToken()
+				.then( (res) => {
+					app.setSpotifyHeader(res.token_type, res.access_token);
+				});
+}
+
+app.spotifyAuthorizationErrorHandle = function(err) {
+	//if the token is no longer valid, redo authorization
+	if (err.status === 401) {
+		return app.setSpotifyAuthorization();
+	} else {
+		console.log('Spotify API HTTP Error:', err.status);
+		//pass on a Promise with the error.
+		return $.Deferred.catch( (err) => err ); 
+		
+	}
+}
+
+app.getSpotifyToken = function () {
+	return $.ajax({
+		url: CONSTANTS.hackeryouProxyUrl,
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			'Accept': 'application/json'
+		},
+		data: JSON.stringify({
+			reqUrl: CONSTANTS.spotifyAuthUrl,
+			params: {
+				grant_type: 'client_credentials'
+			},
+			proxyHeaders: CONSTANTS.spotifyAuthProxyHeader,
+		}),
+	});
+};
+
+app.setSpotifyHeader = function (tokenType, accessToken) {
+	app.spotifyHeader = {
+		'Authorization': `${tokenType} ${accessToken}`
+	}
 };
