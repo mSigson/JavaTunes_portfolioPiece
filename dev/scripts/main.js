@@ -61,8 +61,19 @@ app.createLocationFormSubmitListener = function(){
 };	
 
 // Jenn
-app.getCoffeeShopLocation = function(){
+app.getCoffeeShopLocation = function(location){
 	// -Do an AJAX call to FourSquare API.
+	$.ajax({
+		url: 'https://api.foursquare.com/v2/venues/search?',
+		data: {
+			clientId: app.client_id,
+			clientSecret: app.client_secret,
+			format: 'json',
+			
+
+
+		}
+	})
 };
 
 // Jenn
