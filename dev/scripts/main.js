@@ -149,7 +149,7 @@ app.createMusicFormSubmitBtnListener = function(){
 			//- store the value of both inputs in minutes from {music__durationForm}, call this value app.duration
 			app.storeDurationVal();
 
-			app.genre = 'rock'; // TODO: delete
+			// app.genre = 'rock'; // TODO: delete
 
 			//-if the value of variable app.genre is =null, sweet alert message
 				if(app.genreIsNull()) {
@@ -208,17 +208,15 @@ app.displayMap = function(){
 };
 
 // Fatin
-// TODO
 app.displaySpotifyPlaylist = function(){
-	// const $playlistContainer = $('.results__playlist');
+	const $playlistContainer = $('.results__playlist');
 
-	// const uri = app.pickSpotifyPlaylistUri();
-	// const $domElement = app.createPlaylistDom(uri);
+	const uri = app.pickSpotifyPlaylistUri();
+	const $domElement = app.createPlaylistDom(uri);
 
-	// $playlistContainer.empty();
-	// $playlistContainer.append('CATNIP');
-	// $playlistContainer.append( $($domElement) );
-	// $playlistContainer.show();
+	$playlistContainer.empty();
+	$playlistContainer.append( $($domElement) );
+	$playlistContainer.show();
 };
 
 // Fatin
@@ -238,12 +236,8 @@ app.isSpotifyPlaylistsExhausted = function() {
 
 // Fatin
 app.createPlaylistDom = function(uri) {
-	console.log('spotify playlist dom created.');
 
-	console.log(`<iframe src="${CONSTANTS.spotifyEmbeddedBaseUrl}?uri=${uri}&theme=${CONSTANTS.spotifyEmbeddedThemeColor}" width="${CONSTANTS.spotifyEmbeddedWidth}" height="${CONSTANTS.spotifyEmbeddedHeight}" frameborder="0" allowtransparency="true"></iframe>`);
-
-	return 
-		`<iframe src="${CONSTANTS.spotifyEmbeddedBaseUrl}?uri=${uri}&theme=${CONSTANTS.spotifyEmbeddedThemeColor}" width="${CONSTANTS.spotifyEmbeddedWidth}" height="${CONSTANTS.spotifyEmbeddedHeight}" frameborder="0" allowtransparency="true"></iframe>`
+	return `<iframe src="${CONSTANTS.spotifyEmbeddedBaseUrl}?uri=${uri.replace(/:/g, '%3A')}&theme=${CONSTANTS.spotifyEmbeddedThemeColor}" width="${CONSTANTS.spotifyEmbeddedWidth}" height="${CONSTANTS.spotifyEmbeddedHeight}" frameborder="0" allowtransparency="true"></iframe>`
 };
 
 // Fatin
