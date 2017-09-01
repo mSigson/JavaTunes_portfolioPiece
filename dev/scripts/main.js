@@ -4,6 +4,7 @@ const app = {
 	location : {
 		lat  : 43.6532,
 		lng  : -79.3832,
+		address: ''
 	},
 	resultsDisplayed : false,
 	spotifyPlaylistPromise: null,
@@ -36,8 +37,6 @@ const app = {
  //TODO: remember to use this.
 
 app.init = function () {
-	// initialize the auto complete library
-	// app.initLocationInput();
 	app.events();
 	app.setSpotifyAuthorization();
 
@@ -67,7 +66,6 @@ app.createLocationFormSubmitListener = function(){
 	$('.landing__LocationForm').on('submit', function(e){
 	e.preventDefault();
 
-
         // -Do an AJAX call to FourSquare API.
         app.coffeeShopLocationPromise = app.getCoffeeShopLocation();
 
@@ -81,7 +79,6 @@ app.createLocationFormSubmitListener = function(){
         //    - smooth scroll to section results
         		app.scrollToResults();
         }
-
      });
 };	
 
@@ -489,9 +486,40 @@ app.scrollToLanding = function(){
 // Maren
 //  - initialize the auto complete library
 app.initLocationInput = function () {
-	app.initAutocomplete()
-	
-};
+	// Create the search box and link it to the UI element.
+	var input = document.getElementById('pac-input');
+	var searchBox = new google.maps.places.SearchBox(input);
+	// map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+	// Listen for the event fired when the user selects a prediction and retrieve
+	// more details for that place.
+	searchBox.addListener('places_changed', function() {
+	      var places = searchBox.getPlaces();
+
+		  if (places.length == 0) {
+		    return;
+		}
+
+		 app.location = {
+		  	lng : places[0].geometry.location.lng(),
+		  	lat : places[0].geometry.location.lat(),
+		  	address : places[0].formatted_address
+		  };
+
+		  console.log(app.location);
+
+		  // For each place, get the icon, name and location.
+		  var bounds = new google.maps.LatLngBounds();
+		  places.forEach(function(place) {
+		    if (!place.geometry) {
+		      console.log("Returned place contains no geometry");
+		      return;
+		    }
+		  });
+
+		  $('.landing__LocationForm').trigger('submit');
+	});	
+}
 
 // Fatin
 app.createGenerateNewPlaylistBtnListener = function() {

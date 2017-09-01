@@ -1,13 +1,8 @@
-@import 'setup';
-@import 'partials/global';
-@import 'partials/mixins';
 @import 'partials/variables';
-
-.container {
-	max-width: 900px;
-	margin: 0 auto;
-}
-
-body {
-	background: darkcyan;
-}
+@import 'partials/mixins';
+@import 'partials/setup';
+@import 'partials/global';
+@import 'partials/googleInput';
+@import 'partials/landing';
+@import 'partials/music';
+@import 'partials/results';
