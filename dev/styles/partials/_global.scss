@@ -12,11 +12,14 @@ html {
 h1 {
 	font-size: $mainHeadingFontSize;
 	font-family: $headingFontFamily;
+	color: $darkBrandColor;
+	margin: 0;
 }
 
 h2 {
 	font-size: $subHeadingFontSize;
 	font-family: $headingFontFamily;
+	color: $darkBrandColor;
 }
 
 h3 {

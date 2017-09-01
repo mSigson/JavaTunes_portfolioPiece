@@ -3,7 +3,30 @@
 .landing {
 	min-height: 100vh;
 	background: $lightBrandColor;
+	text-align: center;
 }
+
+h1 {
+	padding: 10rem 0;
+}
+
+.hiddenlanding__locationLabel {
+	visibility: hidden;
+}
+
+.landing__description {
+	font-family: $paragraphFontFamily;
+	font-size: $paragraphFontSize;
+	width: 45%;
+	margin: 0 auto;
+	padding: 5rem 0;
+	background: rgba(211, 118, 48, 0.5);
+	box-shadow: 0 3px 7px 0 rgba(0,0,0,.35);
+}
+
+
+
+
 
 
 
