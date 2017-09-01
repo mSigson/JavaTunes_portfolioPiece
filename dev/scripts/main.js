@@ -29,12 +29,6 @@ const app = {
 
  //TODO: remember to use this.
 
-
-function getFirstElementFromArray(elem) {
-	return elem[0];
-}
-
-
 app.init = function () {
 	// initialize the auto complete library
 	// app.initLocationInput();
