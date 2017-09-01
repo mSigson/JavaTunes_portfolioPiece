@@ -11,7 +11,7 @@ const app = {
 	coffeeShopsInfo: [],
 	//objects inside coffeeShopsInfo{name:,website:,address:,phoneNum:}
 
-	coffeeShopsInfo: [], //TODO: remember to use this.
+	coffeeShopsInfo: [],
 	//name, address, phoneNum, website
 
 	spotifyHeader: {}, //for Spotify OAuth
@@ -25,17 +25,17 @@ const app = {
 	// if it equals to spotifyPlaylists.length
 	// this value will be reset to zero.
 	numOfPlaylistsGenerated: 0,
+<<<<<<< HEAD
 
 	// track for offsetting the requested playlists list from Spotify
 	// so we get new search results.
 	spotifyPlaylistsRequestOffset: 0, 
 
+=======
+>>>>>>> 3fe3f7a1a086026a39281e9a6451d9e638f9812d
 };
 
-function getFirstElementFromArray(elem) {
-	return elem[0];
-}
-
+ //TODO: remember to use this.
 
 app.init = function () {
 	// initialize the auto complete library
@@ -111,24 +111,16 @@ app.getCoffeeShopLocation = function(location){
 
 
 app.getCoffeeShopData = function(coffeeData) {
-	console.log(coffeeData);
-
+	// console.log(coffeeData);
 	coffeeData.forEach(function(data){
-		let name = data.name;
-		// console.log(coffeeShopName);
-
-		let phoneNum = data.contact.formattedPhone;
-		// console.log(coffeeShopPhoneNum);
-
-		let address = data.location.address;
-		// console.log(coffeeShopAddress);
-
-		let website = data.url;
-		// console.log(coffeeShopWebsite);
-
-		//  app.coffeeShopsInfo = [name, phoneNum, address, website]
-		// console.log(app.coffeeShopsInfo);
-	})
+		// pushing this data to app.coffeShopsInfo array in order to populate our map markers
+		app.coffeeShopsInfo.push({
+			name: data.name,
+			phoneNum: data.contact.formattedPhone,
+			address: data.location.address,
+			website: data.url
+		});
+	});
 }
 
 
