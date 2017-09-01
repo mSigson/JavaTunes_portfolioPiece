@@ -8,11 +8,9 @@ const app = {
 	resultsDisplayed : false,
 	spotifyPlaylistPromise: null,
 	coffeeShopLocationPromise: null,
-	coffeeShopsInfo: [],
-	//objects inside coffeeShopsInfo{name:,website:,address:,phoneNum:}
 
 	coffeeShopsInfo: [],
-	//name, address, phoneNum, website
+	//name, address, phoneNum, website, location: {lat:, lng:}
 
 	spotifyHeader: {}, //for Spotify OAuth
 
@@ -104,13 +102,13 @@ app.getCoffeeShopLocation = function(location){
 		let coffeeShopLocationsRes = res.response.venues;
 		// console.log(coffeeShopLocationsRes);
 
-		app.getCoffeeShopData(coffeeShopLocationsRes);
+		app.responseToCoffeeShopInfo(coffeeShopLocationsRes);
 	})
 
 };
 
 // TODO: Needs to be renamed to something like: responseToCoffeShopsInfo()
-app.getCoffeeShopData = function(coffeeData) {
+app.responseToCoffeeShopInfo = function(coffeeData) {
 	// console.log(coffeeData);
 	coffeeData.forEach(function(data){
 		// pushing this data to app.coffeShopsInfo array in order to populate our map markers
@@ -118,11 +116,14 @@ app.getCoffeeShopData = function(coffeeData) {
 			name: data.name,
 			phoneNum: data.contact.formattedPhone,
 			address: data.location.address,
-			website: data.url
+			website: data.url,
+			location: {
+				lat: data.location.lat,
+				lng: data.location.lng
+			}
 		});
 	});
 }
-
 
 // Jenn
 app.scrollToMusic = function() {
@@ -149,8 +150,8 @@ app.showMusic = function (){
 // Jenn
 app.isResultsShowing = function(){
 	// must return true or false
-
-};
+	return $('.results').css('display') !== 'none'
+}; 
 
 // Maren
 app.createMusicGenreBtnListener = function(){
@@ -480,7 +481,9 @@ app.createChangeLocationBtnListener = function(){
 
 // Jenn
 app.scrollToLanding = function(){
-
+	$('html,body').animate({
+     scrollTop: $(".landing").offset().top},
+     'slow');
 };
 
 // Maren
