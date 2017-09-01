@@ -26,6 +26,10 @@ const app = {
 	// this value will be reset to zero.
 	numOfPlaylistsGenerated: 0,
 
+	// track for offsetting the requested playlists list from Spotify
+	// so we get new search results.
+	spotifyPlaylistsRequestOffset: 0, 
+
 };
 
 function getFirstElementFromArray(elem) {
@@ -56,6 +60,8 @@ app.events = function () {
 	app.createChangeMusicBtnListener();
 	// on results__changeLocationBtn click
 	app.createChangeLocationBtnListener();
+	// on results__generateNewPlaylistBtn
+	app.createGenerateNewPlaylistBtnListener();
 }
 
 // Jenn
@@ -98,9 +104,7 @@ app.getCoffeeShopLocation = function(location){
 		let coffeeShopLocationsRes = res.response.venues;
 		// console.log(coffeeShopLocationsRes);
 
-		app.getCoffeeShopData(coffeeShopLocationsRes)
-
-
+		app.getCoffeeShopData(coffeeShopLocationsRes);
 	})
 
 };
@@ -287,11 +291,17 @@ app.displaySpotifyPlaylist = function(){
 };
 
 // Fatin
+app.SpotifyPlaylist
+
+// Fatin
 app.pickSpotifyPlaylistUri = function() {
 	const uri = app.spotifyPlaylists[app.numOfPlaylistsGenerated++].uri;
 
+	app.spotifyPlaylistsRequestOffset++;
+
 	if ( app.isSpotifyPlaylistsExhausted() ) {
-		app.getSpotifyPlaylist();
+		app.getSpotifyPlaylist()
+		app.numOfPlaylistsGenerated = 0;
 	}
 
 	return uri;
@@ -308,13 +318,25 @@ app.createPlaylistDom = function(uri) {
 };
 
 // Fatin
+
+app.resetSpotifyPlaylistAndData = function() {
+	app.numOfPlaylistsGenerated = 0;
+	app.spotifyPlaylistsRequestOffset = 0;
+	
+	app.clearSpotifyPlaylists();
+
+}
+
+// Fatin
 app.getSpotifyPlaylist = function(){
  // - call Spotify AJAX function
 	return $.ajax({
 		url: `${CONSTANTS.spotifyPlaylistsBaseUrl}${app.genre}/playlists?limit=${CONSTANTS.numOfPlaylistLimit}`,
 		method: 'GET',
 		headers: app.spotifyHeader,
-		data: {},
+		data: {
+			offset: app.spotifyPlaylistsRequestOffset,
+		},
 	})
 	.then( (res) => {
 		app.clearSpotifyPlaylists();
@@ -412,6 +434,13 @@ app.initLocationInput = function () {
 	
 };
 
+// Fatin
+app.createGenerateNewPlaylistBtnListener = function() {
+	$('.results__generateNewPlaylistBtn').on('click', function(e) {
+		e.preventDefault();
+		app.displaySpotifyPlaylist();
+	});
+}
 
 /********** Spotify API Related Functions ***********/
 
