@@ -1,0 +1,36 @@
+
+html {
+	font-size: $htmlFontSize;
+}
+
+.wrapper {
+	max-width: $wrapperMaxWidth;
+	width: 100%;
+	margin: 0 auto;
+}
+
+h1 {
+	font-size: $mainHeadingFontSize;
+	font-family: $headingFontFamily;
+}
+
+h2 {
+	font-size: $subHeadingFontSize;
+	font-family: $headingFontFamily;
+}
+
+h3 {
+	font-size: $subSubHeadingFontSize;
+	font-family: $headingFontFamily;
+}
+
+p {
+	font-size: $paragraphFontSize;
+	font-family: $paragraphFontFamily;
+}
+
+.btn--pageAction {
+	background: $darkBrandColor;
+	color: $lightBrandColor;
+	border: none;
+}
