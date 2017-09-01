@@ -2,8 +2,8 @@ const app = {
 	genre    : null,
 	duration : 60,
 	location : {
-		lat  : 0,
-		lng  : 0
+		lat  : 43.6532,
+		lng  : -79.3832,
 	},
 	resultsDisplayed : false,
 	spotifyPlaylistPromise: null,
@@ -25,6 +25,14 @@ const app = {
 	// if it equals to spotifyPlaylists.length
 	// this value will be reset to zero.
 	numOfPlaylistsGenerated: 0,
+
+	// track for offsetting the requested playlists list from Spotify
+	// so we get new search results.
+	spotifyPlaylistsRequestOffset: 0,
+	
+	mapZoomLevel: 13,
+	mapMarkersLayer: {},
+
 };
 
  //TODO: remember to use this.
@@ -52,6 +60,8 @@ app.events = function () {
 	app.createChangeMusicBtnListener();
 	// on results__changeLocationBtn click
 	app.createChangeLocationBtnListener();
+	// on results__generateNewPlaylistBtn
+	app.createGenerateNewPlaylistBtnListener();
 }
 
 // Jenn
@@ -94,14 +104,12 @@ app.getCoffeeShopLocation = function(location){
 		let coffeeShopLocationsRes = res.response.venues;
 		// console.log(coffeeShopLocationsRes);
 
-		app.getCoffeeShopData(coffeeShopLocationsRes)
-
-
+		app.getCoffeeShopData(coffeeShopLocationsRes);
 	})
 
 };
 
-
+// TODO: Needs to be renamed to something like: responseToCoffeShopsInfo()
 app.getCoffeeShopData = function(coffeeData) {
 	// console.log(coffeeData);
 	coffeeData.forEach(function(data){
@@ -204,13 +212,14 @@ app.createMusicFormSubmitBtnListener = function(){
 			//- store the value of both inputs in minutes from {music__durationForm}, call this value app.duration
 			app.storeDurationVal();
 
-			app.genre = 'rock'; // TODO: delete
+			// app.genre = 'rock'; // TODO: delete
 
 			//-if the value of variable app.genre is =null, sweet alert message
 				if(app.genreIsNull()) {
 					app.alertIncompleteForm();
 
 				} else {
+					app.resetSpotifyPlaylistAndData();
 					app.showResults();
 					app.scrollToResults();
 					app.spotifyPlaylistPromise = app.getSpotifyPlaylist();
@@ -252,36 +261,103 @@ app.hideLoadScreen = function(){
 	$('.results__loadScreen').hide();
 };
 
-// TODO
+// TODO: ask Jenn to add the location for the coffeeShopsInfo
 // Fatin
 app.displayMap = function(){
-	//display markers
+	//TODO: remove this line
+	$('#results__map').css('height', '200px').css('width','100%');
+	
+	//create map
+	const $map = app.createMap();
+	const markers = [];
+
+	const location = {
+		lat  : 43.6532,
+		lng  : -79.3832,
+	}
+	//dummy values for coffeeshops
+	app.coffeeShopsInfo = [{name:"blah",address:"blahblah",phoneNum:"555",website:"http://www.google.com",location: location }];
+
+	//generate the markers with popup of shop info.
+	for (let shop of app.coffeeShopsInfo) {
+		const marker = app.createMapMarker(shop.location);
+
+		marker.bindPopup( app.createMapPopup(shop) );
+
+		markers.push(marker);
+	}
+
+	//add all markers to map.
+	app.mapMarkersLayer = L.layerGroup(markers);
+	app.mapMarkersLayer.addTo($map);
+
+};
 
 
-	// display markers
-		//create popups
+// Fatin
+app.createMap = function () {
+
+	const $map = L.map('results__map')
+	.setView([app.location.lat, app.location.lng], app.mapZoomLevel);
+
+	//setup tile layer for map.
+	L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+		//add credits for the data
+		attribution:    
+						'Map data &copy;<a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+		maxZoom:        18,
+		id:             'mapbox.streets',
+		accessToken:    CONSTANTS.mapboxApiKey,
+	})
+	.addTo($map); // Pass in the tile layer data to the Leaflet map, mymap
+
+	return $map;
+};
+
+app.createMapMarker = function(location) {
+	return L.marker([location.lat, location.lng]);
+};
+
+app.createMapPopup = function(shop) {
+	return `<p class="results__mapPopupTitle">${shop.name}</p>
+			<p class="results__mapPopupAddress">${shop.address}</p>
+			<p class="results__mapPopupPhoneNum">${shop.phoneNum}</p>
+			<a class="results__mapPopupWebsite" href="${shop.website}">Website</a>`;
+};
+
+// TODO
+// Fatin
+app.clearMap = function () {
+	//clear out all the markers from map.
+	app.mapMarkersLayer.clearLayers();
 };
 
 // Fatin
-// TODO
 app.displaySpotifyPlaylist = function(){
-	// const $playlistContainer = $('.results__playlist');
+	const $playlistContainer = $('.results__playlist');
 
-	// const uri = app.pickSpotifyPlaylistUri();
-	// const $domElement = app.createPlaylistDom(uri);
+	const uri = app.pickSpotifyPlaylistUri();
+	const $domElement = app.createPlaylistDom(uri);
 
-	// $playlistContainer.empty();
-	// $playlistContainer.append('CATNIP');
-	// $playlistContainer.append( $($domElement) );
-	// $playlistContainer.show();
+	app.clearSpotifyPlaylistDom();
+	$playlistContainer.append( $($domElement) );
+	$playlistContainer.show();
 };
+
+// Fatin
+app.clearSpotifyPlaylistDom = function() {
+	$('.results__playlist').empty();
+}
 
 // Fatin
 app.pickSpotifyPlaylistUri = function() {
 	const uri = app.spotifyPlaylists[app.numOfPlaylistsGenerated++].uri;
 
+	app.spotifyPlaylistsRequestOffset++;
+
 	if ( app.isSpotifyPlaylistsExhausted() ) {
-		app.getSpotifyPlaylist();
+		app.getSpotifyPlaylist()
+		app.numOfPlaylistsGenerated = 0;
 	}
 
 	return uri;
@@ -293,13 +369,19 @@ app.isSpotifyPlaylistsExhausted = function() {
 
 // Fatin
 app.createPlaylistDom = function(uri) {
-	console.log('spotify playlist dom created.');
 
-	console.log(`<iframe src="${CONSTANTS.spotifyEmbeddedBaseUrl}?uri=${uri}&theme=${CONSTANTS.spotifyEmbeddedThemeColor}" width="${CONSTANTS.spotifyEmbeddedWidth}" height="${CONSTANTS.spotifyEmbeddedHeight}" frameborder="0" allowtransparency="true"></iframe>`);
-
-	return 
-		`<iframe src="${CONSTANTS.spotifyEmbeddedBaseUrl}?uri=${uri}&theme=${CONSTANTS.spotifyEmbeddedThemeColor}" width="${CONSTANTS.spotifyEmbeddedWidth}" height="${CONSTANTS.spotifyEmbeddedHeight}" frameborder="0" allowtransparency="true"></iframe>`
+	return `<iframe src="${CONSTANTS.spotifyEmbeddedBaseUrl}?uri=${uri.replace(/:/g, '%3A')}&theme=${CONSTANTS.spotifyEmbeddedThemeColor}" width="${CONSTANTS.spotifyEmbeddedWidth}" height="${CONSTANTS.spotifyEmbeddedHeight}" frameborder="0" allowtransparency="true"></iframe>`
 };
+
+// Fatin
+
+app.resetSpotifyPlaylistAndData = function() {
+	app.numOfPlaylistsGenerated = 0;
+	app.spotifyPlaylistsRequestOffset = 0;
+	
+	app.clearSpotifyPlaylists();
+	app.clearSpotifyPlaylistDom();
+}
 
 // Fatin
 app.getSpotifyPlaylist = function(){
@@ -308,7 +390,9 @@ app.getSpotifyPlaylist = function(){
 		url: `${CONSTANTS.spotifyPlaylistsBaseUrl}${app.genre}/playlists?limit=${CONSTANTS.numOfPlaylistLimit}`,
 		method: 'GET',
 		headers: app.spotifyHeader,
-		data: {},
+		data: {
+			offset: app.spotifyPlaylistsRequestOffset,
+		},
 	})
 	.then( (res) => {
 		app.clearSpotifyPlaylists();
@@ -406,6 +490,13 @@ app.initLocationInput = function () {
 	
 };
 
+// Fatin
+app.createGenerateNewPlaylistBtnListener = function() {
+	$('.results__generateNewPlaylistBtn').on('click', function(e) {
+		e.preventDefault();
+		app.displaySpotifyPlaylist();
+	});
+}
 
 /********** Spotify API Related Functions ***********/
 
