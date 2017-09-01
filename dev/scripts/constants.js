@@ -2,6 +2,7 @@ const CONSTANTS = {
 	numOfLocations : 		10,
 
 	hackeryouProxyUrl: 		'http://proxy.hackeryou.com',
+	
 	/* Spotify API Related */
 	spotifyAuthUrl: 		'https://accounts.spotify.com/api/token',
 	spotifyPlaylistsBaseUrl: 'https://api.spotify.com/v1/browse/categories/',
@@ -17,5 +18,9 @@ const CONSTANTS = {
 	spotifyEmbeddedThemeColor: 'white',
 	spotifyEmbeddedWidth: 300,
 	spotifyEmbeddedHeight: 380,
+
+
+	/* Map Related */
+	mapboxApiKey: 'pk.eyJ1IjoiZmhhcXVlIiwiYSI6ImNqNndyYmg4eDF5dngyd2xhYW84cG0zd2IifQ.8khOiRGilQjImj85qMaqAw',
 
 };

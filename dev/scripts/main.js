@@ -2,8 +2,8 @@ const app = {
 	genre    : null,
 	duration : 60,
 	location : {
-		lat  : 0,
-		lng  : 0
+		lat  : 43.6532,
+		lng  : -79.3832,
 	},
 	resultsDisplayed : false,
 	spotifyPlaylistPromise: null,
@@ -28,7 +28,10 @@ const app = {
 
 	// track for offsetting the requested playlists list from Spotify
 	// so we get new search results.
-	spotifyPlaylistsRequestOffset: 0, 
+	spotifyPlaylistsRequestOffset: 0,
+	
+	mapZoomLevel: 13,
+	mapMarkersLayer: {},
 
 };
 
@@ -106,7 +109,7 @@ app.getCoffeeShopLocation = function(location){
 
 };
 
-
+// TODO: Needs to be renamed to something like: responseToCoffeShopsInfo()
 app.getCoffeeShopData = function(coffeeData) {
 	// console.log(coffeeData);
 	coffeeData.forEach(function(data){
@@ -258,14 +261,75 @@ app.hideLoadScreen = function(){
 	$('.results__loadScreen').hide();
 };
 
-// TODO
+// TODO: ask Jenn to add the location for the coffeeShopsInfo
 // Fatin
 app.displayMap = function(){
-	//display markers
+	//TODO: remove this line
+	$('#results__map').css('height', '200px').css('width','100%');
+	
+	//create map
+	const $map = app.createMap();
+	const markers = [];
+
+	const location = {
+		lat  : 43.6532,
+		lng  : -79.3832,
+	}
+	//dummy values for coffeeshops
+	app.coffeeShopsInfo = [{name:"blah",address:"blahblah",phoneNum:"555",website:"http://www.google.com",location: location }];
+
+	//generate the markers with popup of shop info.
+	for (let shop of app.coffeeShopsInfo) {
+		const marker = app.createMapMarker(shop.location);
+
+		marker.bindPopup( app.createMapPopup(shop) );
+
+		markers.push(marker);
+	}
+
+	//add all markers to map.
+	app.mapMarkersLayer = L.layerGroup(markers);
+	app.mapMarkersLayer.addTo($map);
+
+};
 
 
-	// display markers
-		//create popups
+// Fatin
+app.createMap = function () {
+
+	const $map = L.map('results__map')
+	.setView([app.location.lat, app.location.lng], app.mapZoomLevel);
+
+	//setup tile layer for map.
+	L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+		//add credits for the data
+		attribution:    
+						'Map data &copy;<a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+		maxZoom:        18,
+		id:             'mapbox.streets',
+		accessToken:    CONSTANTS.mapboxApiKey,
+	})
+	.addTo($map); // Pass in the tile layer data to the Leaflet map, mymap
+
+	return $map;
+};
+
+app.createMapMarker = function(location) {
+	return L.marker([location.lat, location.lng]);
+};
+
+app.createMapPopup = function(shop) {
+	return `<p class="results__mapPopupTitle">${shop.name}</p>
+			<p class="results__mapPopupAddress">${shop.address}</p>
+			<p class="results__mapPopupPhoneNum">${shop.phoneNum}</p>
+			<a class="results__mapPopupWebsite" href="${shop.website}">Website</a>`;
+};
+
+// TODO
+// Fatin
+app.clearMap = function () {
+	//clear out all the markers from map.
+	app.mapMarkersLayer.clearLayers();
 };
 
 // Fatin
