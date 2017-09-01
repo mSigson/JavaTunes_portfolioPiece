@@ -37,10 +37,16 @@ const app = {
  //TODO: remember to use this.
 
 app.init = function () {
+	app.initDisplay();
 	app.events();
 	app.setSpotifyAuthorization();
 
 }
+
+app.initDisplay = function() {
+	$('.music').hide();
+	$('.results').hide();
+};
 
 app.events = function () {
 	// on landing__locationFormSubmit submit 
@@ -63,21 +69,26 @@ app.events = function () {
 
 // Jenn
 app.createLocationFormSubmitListener = function(){
-	$('.landing__LocationForm').on('submit', function(e){
+	$('.landing__locationFormSubmitBtn').on('click', function(e){
 	e.preventDefault();
 
         // -Do an AJAX call to FourSquare API.
         app.coffeeShopLocationPromise = app.getCoffeeShopLocation();
 
-        if(app.isResultsShowing()){
+        if( !app.isResultsShowing() ){
         //    -Set display: block for section music.
         		app.showMusic();
         //    - Smooth scroll to section music.
         		app.scrollToMusic();
         } else {
         // ELSE (<section class ="results" === display.block)
-        //    - smooth scroll to section results
+        //    - smooth scroll to section result
+        		app.clearMap();
+        		app.displayMap();
+        		console.log('scroll to results');
         		app.scrollToResults();
+
+
         }
      });
 };	
@@ -85,6 +96,7 @@ app.createLocationFormSubmitListener = function(){
 // Jenn
 app.getCoffeeShopLocation = function(location){
 	// -Do an AJAX call to FourSquare API.
+	console.log('getting foursquare data.');
 	return $.ajax({
 		url: 'https://api.foursquare.com/v2/venues/search?',
 		data: {
@@ -93,7 +105,7 @@ app.getCoffeeShopLocation = function(location){
 			format: 'json',
 			v: '20170930',
 			query: 'coffee',
-			ll: '43.654416538795935, -79.40131094320991'
+			ll: `${app.location.lat}, ${app.location.lng}`	
 		}
 	}).then(function(res){
 		let coffeeShopLocationsRes = res.response.venues;
@@ -268,13 +280,6 @@ app.displayMap = function(){
 	//create map
 	const $map = app.createMap();
 	const markers = [];
-
-	const location = {
-		lat  : 43.6532,
-		lng  : -79.3832,
-	}
-	//dummy values for coffeeshops
-	app.coffeeShopsInfo = [{name:"blah",address:"blahblah",phoneNum:"555",website:"http://www.google.com",location: location }];
 
 	//generate the markers with popup of shop info.
 	for (let shop of app.coffeeShopsInfo) {
@@ -491,6 +496,11 @@ app.initLocationInput = function () {
 	var searchBox = new google.maps.places.SearchBox(input);
 	// map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
+	// $('landing__locationForm').on('submit',function(e) {
+	// 	e.preventDefault();
+	// 	console.log('form submitting.');
+	// });
+
 	// Listen for the event fired when the user selects a prediction and retrieve
 	// more details for that place.
 	searchBox.addListener('places_changed', function() {
@@ -508,16 +518,18 @@ app.initLocationInput = function () {
 
 		  console.log(app.location);
 
-		  // For each place, get the icon, name and location.
-		  var bounds = new google.maps.LatLngBounds();
-		  places.forEach(function(place) {
-		    if (!place.geometry) {
-		      console.log("Returned place contains no geometry");
-		      return;
-		    }
-		  });
+		  // e.preventDefault();
 
-		  $('.landing__LocationForm').trigger('submit');
+		  // For each place, get the icon, name and location.
+		  // var bounds = new google.maps.LatLngBounds();
+		  // places.forEach(function(place) {
+		  //   if (!place.geometry) {
+		  //     console.log("Returned place contains no geometry");
+		  //     return;
+		  //   }
+		  // });
+
+		  $('.landing__locationFormSubmitBtn').trigger('click');
 	});	
 }
 
