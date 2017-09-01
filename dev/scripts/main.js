@@ -29,8 +29,10 @@ const app = {
 	// so we get new search results.
 	spotifyPlaylistsRequestOffset: 0,
 	
+	map: {}, //contains Leaflet map object
 	mapZoomLevel: 13,
 	mapMarkersLayer: {},
+	mapMarkers: [],
 
 };
 
@@ -76,18 +78,21 @@ app.createLocationFormSubmitListener = function(){
         app.coffeeShopLocationPromise = app.getCoffeeShopLocation();
 
         if( !app.isResultsShowing() ){
-        //    -Set display: block for section music.
-        		app.showMusic();
-        //    - Smooth scroll to section music.
-        		app.scrollToMusic();
+	//    -Set display: block for section music.
+			app.showMusic();
+	//    - Smooth scroll to section music.
+			app.scrollToMusic();
         } else {
         // ELSE (<section class ="results" === display.block)
-        //    - smooth scroll to section result
-        		app.clearMap();
-        		app.displayMap();
-        		console.log('scroll to results');
-        		app.scrollToResults();
+		//    - smooth scroll to section result
 
+			//when coffeeshop data is recieved, display it on map.
+			app.coffeeShopLocationPromise.then( () => {
+				app.clearMap();
+				app.displayMap();
+			});
+			
+			app.scrollToResults();
 
         }
      });
@@ -96,7 +101,6 @@ app.createLocationFormSubmitListener = function(){
 // Jenn
 app.getCoffeeShopLocation = function(location){
 	// -Do an AJAX call to FourSquare API.
-	console.log('getting foursquare data.');
 	return $.ajax({
 		url: 'https://api.foursquare.com/v2/venues/search?',
 		data: {
@@ -118,6 +122,8 @@ app.getCoffeeShopLocation = function(location){
 
 // TODO: Needs to be renamed to something like: responseToCoffeShopsInfo()
 app.responseToCoffeeShopInfo = function(coffeeData) {
+	//reset coffee shop data.
+	app.coffeeShopsInfo = [];
 	// console.log(coffeeData);
 	coffeeData.forEach(function(data){
 		// pushing this data to app.coffeShopsInfo array in order to populate our map markers
@@ -217,37 +223,37 @@ app.createGenreOtherInputListener = function(){
 
 //Fatin 
 app.createMusicFormSubmitBtnListener = function(){
-		// -on {music__musicFormSubmitBtn}, click,
+
 		$('.music__musicFormSubmitBtn').on('click', function() {
 			//- store the value of both inputs in minutes from {music__durationForm}, call this value app.duration
-			app.storeDurationVal();
+			// app.storeDurationVal(); //DEPRECATED
 
-			// app.genre = 'rock'; // TODO: delete
-
-			//-if the value of variable app.genre is =null, sweet alert message
+				//if the value of variable app.genre is =null, sweet alert message
 				if(app.genreIsNull()) {
 					app.alertIncompleteForm();
 
 				} else {
 					app.resetSpotifyPlaylistAndData();
+
+					//set the load screen
+					app.showLoadIndicator();
+					app.hideErrorMsg();
+					app.showLoadScreen();
+					
+					//show and scroll to results.
 					app.showResults();
 					app.scrollToResults();
+
 					app.spotifyPlaylistPromise = app.getSpotifyPlaylist();
 						$.when(app.spotifyPlaylistPromise, app.coffeeShopLocationPromise)
 							.then( (spotifyRes, coffeeShopLocationRes) => {
-								//TODO: Need to add response handles.
-								
-			//                - display spotify playlist (function)
 								app.displaySpotifyPlaylist();
-			//                - display map, CONSTANTS.numOfLocations, (function)
+
 								app.displayMap();
-			//                - set {results__loadScreen} to display none
 								app.hideLoadScreen();
 
 							}).fail((err) =>{
-			//                - set {results__loadIndicator} to display none
 								app.hideLoadIndicator();
-			//                - set {results__loadErrorMsg} to display block
 								app.showErrorMsg();
 							});
 
@@ -262,6 +268,16 @@ app.showErrorMsg = function(){
 };
 
 // Fatin
+app.hideErrorMsg = function(){
+	$('.results__loadErrorMsg').hide();
+};
+
+// Fatin
+app.showLoadIndicator = function(){
+	$('.results__loadIndicator').show();
+};
+
+// Fatin
 app.hideLoadIndicator = function(){
 	$('.results__loadIndicator').hide();
 };
@@ -271,14 +287,24 @@ app.hideLoadScreen = function(){
 	$('.results__loadScreen').hide();
 };
 
-// TODO: ask Jenn to add the location for the coffeeShopsInfo
+// Fatin
+app.showLoadScreen = function(){
+	$('.results__loadScreen').show();
+};
+
+
 // Fatin
 app.displayMap = function(){
 	//TODO: remove this line
 	$('#results__map').css('height', '200px').css('width','100%');
 	
 	//create map
-	const $map = app.createMap();
+	if ( !app.hasMap() ) {
+		app.map = app.createMap();
+	}
+
+	app.setMapView();
+
 	const markers = [];
 
 	//generate the markers with popup of shop info.
@@ -290,18 +316,31 @@ app.displayMap = function(){
 		markers.push(marker);
 	}
 
+	
+	markers.forEach(function(marker) {
+		marker.addTo(app.map);
+	});
+
+	app.markers = markers;
+
 	//add all markers to map.
-	app.mapMarkersLayer = L.layerGroup(markers);
-	app.mapMarkersLayer.addTo($map);
+	// app.mapMarkersLayer = L.layerGroup(markers);
+	// app.mapMarkersLayer.addTo(app.map);
+	// console.log(app.mapMarkersLayer);
+	
 
 };
 
+app.setMapView = function() {
+	app.map.setView([app.location.lat, app.location.lng], app.mapZoomLevel);
+};
 
 // Fatin
 app.createMap = function () {
-
+	//initialize map
 	const $map = L.map('results__map')
 	.setView([app.location.lat, app.location.lng], app.mapZoomLevel);
+
 
 	//setup tile layer for map.
 	L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
@@ -332,14 +371,22 @@ app.createMapPopup = function(shop) {
 // Fatin
 app.clearMap = function () {
 	//clear out all the markers from map.
-	app.mapMarkersLayer.clearLayers();
+	app.markers.forEach(function(marker){
+		marker.remove();
+	});
+};
+
+app.hasMap = function () {
+	return !$.isEmptyObject(app.map); 
 };
 
 // Fatin
 app.displaySpotifyPlaylist = function(){
 	const $playlistContainer = $('.results__playlist');
-
+	
+	//get playlist uri to display
 	const uri = app.pickSpotifyPlaylistUri();
+
 	const $domElement = app.createPlaylistDom(uri);
 
 	app.clearSpotifyPlaylistDom();
@@ -450,25 +497,24 @@ app.genreIsNull = function(){
 };
 
 // Jenn
+// DEPRECATED
  //- store the value of both inputs in minutes from {music__durationForm}, call this value app.duration
-app.storeDurationVal = function(){
+// app.storeDurationVal = function(){
 
-};
+// };
 
-// TODO
+
 // on results__reloadBtn click
 app.createReloadBtnListener = function(){
-	// error message reload button (have yet to put into html context)
 	$('.results__reloadBtn').on('click', function() {
-		console.log('createReloadBtnListener function needs to be complete.');
+		$('.music__musicFormSubmitBtn').trigger('click');
 	});
 };
 
-// Fatin
+
 // on results__changeMusicBtn click
 app.createChangeMusicBtnListener = function(){
 	$('.results__changeMusicBtn').on('click', function() {
-		// - smooth scroll up to music section.
 		app.scrollToMusic();
 	});
 };
@@ -516,7 +562,7 @@ app.initLocationInput = function () {
 		  	address : places[0].formatted_address
 		  };
 
-		  console.log(app.location);
+
 
 		  // e.preventDefault();
 
