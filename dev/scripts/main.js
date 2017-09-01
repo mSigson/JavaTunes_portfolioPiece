@@ -11,7 +11,7 @@ const app = {
 	coffeeShopsInfo: [],
 	//objects inside coffeeShopsInfo{name:,website:,address:,phoneNum:}
 
-	coffeeShopsInfo: [], //TODO: remember to use this.
+	coffeeShopsInfo: [],
 	//name, address, phoneNum, website
 
 	spotifyHeader: {}, //for Spotify OAuth
@@ -26,6 +26,9 @@ const app = {
 	// this value will be reset to zero.
 	numOfPlaylistsGenerated: 0,
 };
+
+ //TODO: remember to use this.
+
 
 function getFirstElementFromArray(elem) {
 	return elem[0];
@@ -106,24 +109,16 @@ app.getCoffeeShopLocation = function(location){
 
 
 app.getCoffeeShopData = function(coffeeData) {
-	console.log(coffeeData);
-
+	// console.log(coffeeData);
 	coffeeData.forEach(function(data){
-		let name = data.name;
-		// console.log(coffeeShopName);
-
-		let phoneNum = data.contact.formattedPhone;
-		// console.log(coffeeShopPhoneNum);
-
-		let address = data.location.address;
-		// console.log(coffeeShopAddress);
-
-		let website = data.url;
-		// console.log(coffeeShopWebsite);
-
-		//  app.coffeeShopsInfo = [name, phoneNum, address, website]
-		// console.log(app.coffeeShopsInfo);
-	})
+		// pushing this data to app.coffeShopsInfo array in order to populate our map markers
+		app.coffeeShopsInfo.push({
+			name: data.name,
+			phoneNum: data.contact.formattedPhone,
+			address: data.location.address,
+			website: data.url
+		});
+	});
 }
 
 
