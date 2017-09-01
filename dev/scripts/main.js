@@ -25,14 +25,11 @@ const app = {
 	// if it equals to spotifyPlaylists.length
 	// this value will be reset to zero.
 	numOfPlaylistsGenerated: 0,
-<<<<<<< HEAD
 
 	// track for offsetting the requested playlists list from Spotify
 	// so we get new search results.
 	spotifyPlaylistsRequestOffset: 0, 
 
-=======
->>>>>>> 3fe3f7a1a086026a39281e9a6451d9e638f9812d
 };
 
  //TODO: remember to use this.
@@ -219,6 +216,7 @@ app.createMusicFormSubmitBtnListener = function(){
 					app.alertIncompleteForm();
 
 				} else {
+					app.resetSpotifyPlaylistAndData();
 					app.showResults();
 					app.scrollToResults();
 					app.spotifyPlaylistPromise = app.getSpotifyPlaylist();
@@ -277,13 +275,15 @@ app.displaySpotifyPlaylist = function(){
 	const uri = app.pickSpotifyPlaylistUri();
 	const $domElement = app.createPlaylistDom(uri);
 
-	$playlistContainer.empty();
+	app.clearSpotifyPlaylistDom();
 	$playlistContainer.append( $($domElement) );
 	$playlistContainer.show();
 };
 
 // Fatin
-app.SpotifyPlaylist
+app.clearSpotifyPlaylistDom = function() {
+	$('.results__playlist').empty();
+}
 
 // Fatin
 app.pickSpotifyPlaylistUri = function() {
@@ -316,7 +316,7 @@ app.resetSpotifyPlaylistAndData = function() {
 	app.spotifyPlaylistsRequestOffset = 0;
 	
 	app.clearSpotifyPlaylists();
-
+	app.clearSpotifyPlaylistDom();
 }
 
 // Fatin
