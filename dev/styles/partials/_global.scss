@@ -3,6 +3,10 @@ html {
 	font-size: $htmlFontSize;
 }
 
+section {
+	height: 100vh;
+}
+
 .wrapper {
 	max-width: $wrapperMaxWidth;
 	width: 100%;
@@ -17,6 +21,7 @@ h1 {
 h2 {
 	font-size: $subHeadingFontSize;
 	font-family: $headingFontFamily;
+	color: $darkBrandColor;
 }
 
 h3 {
@@ -29,8 +34,11 @@ p {
 	font-family: $paragraphFontFamily;
 }
 
+img {
+	max-width: 100%;
+}
+
 .btn--pageAction {
 	background: $darkBrandColor;
 	color: $lightBrandColor;
-	border: none;
 }
