@@ -9,7 +9,7 @@
 		transform: translateY(calc(50% - 310px));
 	}
 	@include respond-to(small) {
-		transform: translateY(0);
+		transform: translateY(1%);
 	}
 }
 
@@ -24,10 +24,8 @@
 		min-height: 90vh;
 	}
 	@include respond-to(small) {
-		width: 100%;
-		border: none;
-		background: none;
-		box-shadow: none;
+		width: 95%;
+		min-height: 95vh;
 	}
 }
 
