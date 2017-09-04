@@ -41,7 +41,7 @@
 }
 
 .music__genreBtn img {
-	width: 60%;
+	width: 45%;
 	opacity: 0.8;
 }
 
@@ -50,6 +50,9 @@
 	border: 2px solid $darkBrandColor;
 	margin-top: 10px;
 	font-size: 15px;
+	padding: 5px;
+	width: 200px;
+	height: 40px;
 }
 
 .music__GenreOtherSelect:focus {
@@ -64,4 +67,16 @@
 	padding: 15px 15px;
 	font-size: 15px;
 	border: none;
+}
+
+.sweet-alert {
+	background: $lightBrandColor;
+}
+
+.sweet-alert .sa-icon.sa-error {
+	border-color: $darkBrandColor;
+}
+
+.sa-button-container button {
+	background-color: none;
 }
