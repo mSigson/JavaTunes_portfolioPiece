@@ -80,14 +80,19 @@
 
 <section class = "results">
 	<div class = "results__bg"></div>
-	<div class="wrapper clearfix">
+	<div class="results__loadScreenContainer wrapper">
 		<div class="results__loadScreen">
-			<div class="results__loadIndicator"></div>
+			<div class="results__loadIndicator">
+				<img src="/public/assets/loadAnimation.gif" alt="Coffee Load Animation">
+				<p>Loading. Turning caffeine into Results!</p>
+			</div>
 			<div class="results__loadErrorMsg">
-				<p>(error message to user)</p>
+				<p>Awww. We couldn't get what you were looking for! Try hitting the Retry button!</p>
 				<button class="results__reloadBtn btn--pageAction">Retry</button>
 			</div>
 		</div>
+	</div>
+	<div class="results__mainContentContainer wrapper clearfix">
 		<div class="results__playlistContainer">
 			<h3 class="results__playlistTitle">Your Playlist</h3>
 			<button class="results__changeMusicBtn btn--pageAction">Change Genre</button>

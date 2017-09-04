@@ -284,12 +284,12 @@ app.hideLoadIndicator = function(){
 
 // Fatin
 app.hideLoadScreen = function(){
-	$('.results__loadScreen').hide();
+	$('.results__loadScreenContainer').hide();
 };
 
 // Fatin
 app.showLoadScreen = function(){
-	$('.results__loadScreen').show();
+	$('.results__loadScreenContainer').show();
 };
 
 
