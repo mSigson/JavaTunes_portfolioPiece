@@ -114,7 +114,7 @@ app.getCoffeeShopLocation = function(location){
 app.responseToCoffeeShopInfo = function(coffeeData) {
 	//reset coffee shop data.
 	app.coffeeShopsInfo = [];
-	// console.log(coffeeData);
+
 	coffeeData.forEach(function(data){
 		// pushing this data to app.coffeShopsInfo array in order to populate our map markers
 		app.coffeeShopsInfo.push({
@@ -305,8 +305,6 @@ app.displayMap = function() {
 	//generate the markers with popup of shop info.
 	for (let shop of app.coffeeShopsInfo) {
 		const marker = app.createMapMarker(shop.location);
-
-		console.log(marker, marker.position.lat(), marker.position.lng());
 
 		const popup = app.createMapPopup(shop);
 

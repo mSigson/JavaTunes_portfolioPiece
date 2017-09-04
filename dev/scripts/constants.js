@@ -1,7 +1,7 @@
 const CONSTANTS = {
 	numOfLocations : 		10,
 
-	hackeryouProxyUrl: 		'http://proxy.hackeryou.com',
+	hackeryouProxyUrl: 		'https://proxy.hackeryou.com',
 	
 	/* Spotify API Related */
 	spotifyAuthUrl: 		'https://accounts.spotify.com/api/token',
