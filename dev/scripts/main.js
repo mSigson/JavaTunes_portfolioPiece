@@ -578,11 +578,10 @@ app.initLocationInput = function () {
 		 app.location = {
 		  	lng : places[0].geometry.location.lng(),
 		  	lat : places[0].geometry.location.lat(),
-		  	address : places[0].formatted_address
-		  	console.log(app.location.address);
+		  	address : places[0].formatted_address,
 		  };
 
-		$('.results__mapTitle').append(`Coffee shop locations near ${app.location.address}`);
+		$('.results__mapTitle').append(`<p>Coffee shop locations near</p><p>${app.location.address}</p>`);
 
 
 
