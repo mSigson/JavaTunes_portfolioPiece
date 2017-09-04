@@ -50,26 +50,52 @@
 
 <section class="music">
 	<div class="wrapper">
-		<h2 class="music__title">Pick a Genre</h2>
-		<form action="" class="music__genreForm">
-			<div class="music__genreBtnContainer">
-				<button class="music__genreBtn" value="rock">Rock</button>
-				<button class="music__genreBtn" value="pop">Pop</button>
-				<button class="music__genreBtn" value="hiphop">Hip Hop</button>
-				<button class="music__genreBtn" value="metal">Metal</button>
-				<button class="music__genreBtn" value="rnb">RnB</button>
-				<button class="music__genreBtn" value="indie_alt">Indie/Alternative</button>
-				<button class="music__genreBtn" value="jazz">Jazz</button>
-				<button class="music__genreBtn" value="edm_dance">Electronic</button>
-			</div>
-			<select name="genreOtherSelect" id="music__GenreOtherSelect" class="music__GenreOtherSelect">
-				<option selected="selected" value="other">Other</option>
-				<option value="workout">Workout</option>
-				<option value="sleep">Sleep</option>
-			</select>
-		</form>
-
-		<button class="music__musicFormSubmitBtn btn--pageAction">Get My Playlist</button>
+		<div class="music__container">
+			<h2 class="music__title">Pick a Genre</h2>
+			<form action="" class="music__genreForm">
+				<div class="music__genreBtnContainer clearfix">
+					<button class="music__genreBtn" value="rock">
+						<img src="dev/assets/genreBtnIcons/icon1.png" alt="">
+						<p>Rock</p>
+					</button>
+					<button class="music__genreBtn" value="pop">
+						<img src="dev/assets/genreBtnIcons/icon2.png" alt="">
+						<p>Pop</p>
+					</button>
+					<button class="music__genreBtn" value="hiphop">
+						<img src="dev/assets/genreBtnIcons/icon3.png" alt="">
+						<p>Hip Hop</p>
+					</button>
+					<button class="music__genreBtn" value="metal">
+						<img src="dev/assets/genreBtnIcons/icon4.png" alt="">
+						<p>Metal</p>
+					</button>
+					<button class="music__genreBtn" value="rnb">
+						<img src="dev/assets/genreBtnIcons/icon5.png" alt="">
+						<p>RnB</p>
+					</button>
+					<button class="music__genreBtn" value="indie_alt">
+						<img src="dev/assets/genreBtnIcons/icon6.png" alt="">
+						<p>Indie/Alt</p>
+					</button>
+					<button class="music__genreBtn" value="jazz">
+						<img src="dev/assets/genreBtnIcons/icon7.png" alt="">
+						<p>Jazz</p>
+					</button>
+					<button class="music__genreBtn" value="edm_dance">
+						<img src="dev/assets/genreBtnIcons/icon8.png" alt="">
+						<p>Electronic</p>
+					</button>
+				</div>
+				<select name="genreOtherSelect" id="music__GenreOtherSelect" class="music__GenreOtherSelect">
+					<option selected="selected" value="other">Other</option>
+					<option value="workout">Workout</option>
+					<option value="sleep">Sleep</option>
+				</select>
+			</form>
+			
+			<button class="music__musicFormSubmitBtn btn--pageAction">Get My Playlist</button>
+		</div>
 	</div>
 </section>
 

@@ -1,6 +1,11 @@
 
 html {
 	font-size: $htmlFontSize;
+	background: $lightBrandColor;
+}
+
+section {
+	min-height: 100vh;
 }
 
 .wrapper {
@@ -34,8 +39,29 @@ p {
 	font-family: $paragraphFontFamily;
 }
 
+img {
+	max-width: 100%;
+}
+
 .btn--pageAction {
 	background: $darkBrandColor;
 	color: $lightBrandColor;
 	border: none;
+}
+
+.btn--pageAction:hover {
+	background: $lightBrandColor;
+	color: $darkBrandColor;
+}
+
+.btn--pageAction:focus {
+	outline: none;
+}
+
+.sweet-alert {
+	background: $lightBrandColor;
+}
+
+.sweet-alert .sa-icon.sa-error {
+	border-color: $darkBrandColor;
 }
