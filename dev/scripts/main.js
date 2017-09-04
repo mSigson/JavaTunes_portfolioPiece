@@ -16,9 +16,6 @@ const app = {
 
 	spotifyHeader: {}, //for Spotify OAuth
 
-	client_id : 'RT3LKD5UVN1NHTLW20JOPKOLJEPNXGCDZFNRCZAH5UIJ5XNN',
-	client_secret : 'JK0QPEHBL5WHEUBISF1NGUXNPHF30F2QKYYNNU30PHVVEFMW',
-
 	spotifyPlaylists: [],
 
 	// track num of playlists generated for user.
@@ -35,14 +32,12 @@ const app = {
 	mapMarkersLayer: {},
 	mapMarkers: [],
 	mapPopups: [],
-
 };
 
 app.init = function () {
 	app.initDisplay();
 	app.events();
 	app.setSpotifyAuthorization();
-
 }
 
 app.initDisplay = function() {
@@ -69,7 +64,6 @@ app.events = function () {
 	app.createGenerateNewPlaylistBtnListener();
 }
 
-// Jenn
 app.createLocationFormSubmitListener = function(){
 	$('.landing__locationFormSubmitBtn').on('click', function(e){
 	e.preventDefault();
@@ -87,9 +81,6 @@ app.createLocationFormSubmitListener = function(){
 	//    - Smooth scroll to section music.
 			app.scrollToMusic();
         } else {
-        // ELSE (<section class ="results" === display.block)
-		//    - smooth scroll to section result
-
 			//when coffeeshop data is recieved, display it on map.
 			app.coffeeShopLocationPromise.then( () => {
 				app.clearMap();
@@ -101,14 +92,13 @@ app.createLocationFormSubmitListener = function(){
      });
 };	
 
-// Jenn
 app.getCoffeeShopLocation = function(location){
 	// -Do an AJAX call to FourSquare API.
 	return $.ajax({
 		url: 'https://api.foursquare.com/v2/venues/search?',
 		data: {
-			client_id: app.client_id,
-			client_secret: app.client_secret,
+			client_id: CONSTANTS.foursquare_id,
+			client_secret: CONSTANTS.foursquare_secret,
 			format: 'json',
 			v: '20170930',
 			query: 'coffee',
@@ -123,7 +113,6 @@ app.getCoffeeShopLocation = function(location){
 
 };
 
-// TODO: Needs to be renamed to something like: responseToCoffeShopsInfo()
 app.responseToCoffeeShopInfo = function(coffeeData) {
 	//reset coffee shop data.
 	app.coffeeShopsInfo = [];
@@ -143,7 +132,7 @@ app.responseToCoffeeShopInfo = function(coffeeData) {
 	});
 }
 
-// if no location has been typed in the
+// if no location has been typed in the input field, include error message
 app.isLocationInputNull = function () {
 	 return app.location.address === '';
 };
@@ -159,8 +148,6 @@ app.alertIncompleteLocationForm = function(){
 	    });
 }
 
-
-// Jenn
 app.scrollToMusic = function() {
 	// Smooth scroll to section music
 	$('html,body').animate({
@@ -168,7 +155,6 @@ app.scrollToMusic = function() {
      'slow');
 };
 
-// Jenn
 app.scrollToResults = function() {
 	// Smooth scroll to section results
 	$('html,body').animate({
@@ -176,13 +162,11 @@ app.scrollToResults = function() {
      'slow');
 };
 
-// Jenn
 app.showMusic = function (){
 	// Set display: block for section music.
 	$('.music').show('slow');
 };
 
-// Jenn
 app.isResultsShowing = function(){
 	// must return true or false
 	return $('.results').css('display') !== 'none'
@@ -510,14 +494,6 @@ app.genreIsNull = function(){
 	return app.genre === null;
 };
 
-// Jenn
-// DEPRECATED
- //- store the value of both inputs in minutes from {music__durationForm}, call this value app.duration
-// app.storeDurationVal = function(){
-
-// };
-
-
 // on results__reloadBtn click
 app.createReloadBtnListener = function(){
 	$('.results__reloadBtn').on('click', function() {
@@ -541,7 +517,6 @@ app.createChangeLocationBtnListener = function(){
 	});
 };
 
-// Jenn
 app.scrollToLanding = function(){
 	$('html,body').animate({
      scrollTop: $(".landing").offset().top},

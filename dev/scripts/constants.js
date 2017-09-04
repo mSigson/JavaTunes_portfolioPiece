@@ -19,6 +19,11 @@ const CONSTANTS = {
 	spotifyEmbeddedWidth: 300,
 	spotifyEmbeddedHeight: 380,
 
+	// Foursquare API keys
+
+	foursquare_id : 'RT3LKD5UVN1NHTLW20JOPKOLJEPNXGCDZFNRCZAH5UIJ5XNN',
+	foursquare_secret : 'JK0QPEHBL5WHEUBISF1NGUXNPHF30F2QKYYNNU30PHVVEFMW',
+
 
 	/* Map Related */
 
