@@ -581,7 +581,7 @@ app.initLocationInput = function () {
 		  	address : places[0].formatted_address,
 		  };
 
-		$('.results__mapTitle').append(`<p>Coffee shop locations near</p><p>${app.location.address}</p>`);
+		$('.results__mapTitle').append(`Coffee shops near ${app.location.address}`);
 
 
 

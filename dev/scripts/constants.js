@@ -10,7 +10,7 @@ const CONSTANTS = {
 
 	spotifyAuthProxyHeader: {'Authorization': 'Basic MTY5Y2EwNGU1ODk5NGQwNWJhOWRmYzcxMjE5YzQ2NGQ6YmUwNWI1ZTc3NGE2NDVhMjllNWYzZjFiOTQyMDExMDI'},
 
-	spotifyGenres: {"toplists":"Top-Listen","chill":"Chillout","mood":"Stimmung","pop":"Pop","edm_dance":"Electronic/Dance","hiphop":"Hip Hop","party":"Party","rock":"Rock","workout":"Fitness","focus":"Konzentration","decades":"Jahrzehnte","dinner":"Abendessen","sleep":"Schlaf","indie_alt":"Indie/Alternative","rnb":"RnB","popculture":"Trending","metal":"Metal","soul":"Soul","romance":"Romantik","jazz":"Jazz"},
+	spotifyGenres: {"toplists":"Hits","chill":"Chillout","mood":"Mood","pop":"Pop","edm_dance":"Electronic/Dance","hiphop":"Hip Hop","party":"Party","rock":"Rock","workout":"Workout","focus":"Focus","decades":"Decades","dinner":"Ambiance","sleep":"Sleep","indie_alt":"Indie/Alternative","rnb":"RnB","popculture":"Trending","metal":"Metal","soul":"Soul","romance":"Romantic","jazz":"Jazz"},
 
 	numOfPlaylistLimit: 10, //number of playlists that is stored by the app.
 
@@ -21,6 +21,5 @@ const CONSTANTS = {
 
 
 	/* Map Related */
-	mapboxApiKey: 'pk.eyJ1IjoiZmhhcXVlIiwiYSI6ImNqNndyYmg4eDF5dngyd2xhYW84cG0zd2IifQ.8khOiRGilQjImj85qMaqAw',
-
+	mapboxApiKey: 'pk.eyJ1IjoiZmhhcXVlIiwiYSI6ImNqNndyYmg4eDF5dngyd2xhYW84cG0zd2IifQ.8khOiRGilQjImj85qMaqAw'
 };
