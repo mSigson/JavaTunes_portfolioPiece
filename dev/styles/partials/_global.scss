@@ -32,6 +32,7 @@ h2 {
 h3 {
 	font-size: $subSubHeadingFontSize;
 	font-family: $headingFontFamily;
+	color: $darkBrandColor;
 }
 
 p {
@@ -47,6 +48,13 @@ img {
 	background: $darkBrandColor;
 	color: $lightBrandColor;
 	border: none;
+}
+
+// TODO: check if needs to be removed
+.landing, 
+.music, 
+.results {
+	min-height: 100vh;
 }
 
 .btn--pageAction:hover {

@@ -4,11 +4,27 @@ const concat = require('gulp-concat');
 const babel = require('gulp-babel');
 const autoprefixer = require('gulp-autoprefixer');
 const plumber = require('gulp-plumber');
+const imagemin = require('gulp-imagemin');
 const browserSync = require('browser-sync').create();
 const reload = browserSync.reload;
 
 gulp.task('assets', () => {
+  // return gulp.src('./dev/assets/**/*')
+  //   .pipe(gulp.dest('./public/assets/'))
+  //   .pipe(reload({stream: true}));
+
   return gulp.src('./dev/assets/**/*')
+    .pipe(imagemin([
+      imagemin.gifsicle({interlaced: true}),
+      imagemin.jpegtran({progressive: true}),
+      imagemin.optipng({optimizationLevel: 5}),
+      imagemin.svgo({
+        plugins: [
+          {removeViewBox: true},
+          {cleanupIDs: false}
+        ]
+      })
+    ]))
     .pipe(gulp.dest('./public/assets/'))
     .pipe(reload({stream: true}));
 });
@@ -40,6 +56,7 @@ gulp.task('browser-sync', () => {
     server: '.'  
   });
 });
+
 
 
 // a task to watch all of our other tasks
