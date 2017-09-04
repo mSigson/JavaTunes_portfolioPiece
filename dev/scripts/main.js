@@ -78,7 +78,11 @@ app.createLocationFormSubmitListener = function(){
         // -Do an AJAX call to FourSquare API.
         app.coffeeShopLocationPromise = app.getCoffeeShopLocation();
 
-        if( !app.isResultsShowing() ){
+        if(app.isLocationInputNull()){
+
+			app.alertIncompleteLocationForm();
+
+		} else if ( !app.isResultsShowing() ){
 	//    -Set display: block for section music.
 			app.showMusic();
 	//    - Smooth scroll to section music.
@@ -94,7 +98,6 @@ app.createLocationFormSubmitListener = function(){
 			});
 			
 			app.scrollToResults();
-
         }
      });
 };	
@@ -140,6 +143,23 @@ app.responseToCoffeeShopInfo = function(coffeeData) {
 		});
 	});
 }
+
+// if no location has been typed in the
+app.isLocationInputNull = function () {
+	 return app.location.address === '';
+};
+
+app.alertIncompleteLocationForm = function(){
+		sweetAlert({
+	         title: 'Incomplete',
+	         text: 'Please Type in a Location!',
+	         type: 'error',
+	         allowEscapeKey: 'true',
+	         showConfirmButton: true,
+	         confirmButtonColor: "#1f6d69",
+	    });
+}
+
 
 // Jenn
 app.scrollToMusic = function() {
@@ -481,7 +501,6 @@ app.showResults = function(){
 
 // Maren
 app.alertIncompleteForm = function(){
-	if(app.genre === null){
 		sweetAlert({
 	         title: 'Incomplete',
 	         text: 'Please pick from either the genres provided or from the "Other" menu.',
@@ -490,7 +509,6 @@ app.alertIncompleteForm = function(){
 	         showConfirmButton: true,
 	         confirmButtonColor: "#1f6d69",
 	    });
-	}
 };
 
 // Fatin
@@ -563,8 +581,11 @@ app.initLocationInput = function () {
 		 app.location = {
 		  	lng : places[0].geometry.location.lng(),
 		  	lat : places[0].geometry.location.lat(),
-		  	address : places[0].formatted_address
+		  	address : places[0].formatted_address,
 		  };
+
+		$('.results__mapTitle').append(`<p>Coffee shop locations near</p><p>${app.location.address}</p>`);
+
 
 
 

@@ -54,6 +54,9 @@
 
     padding: 50px 10px;
     // border: 1px solid red;
+    @include respond-to(medium) {
+       padding: 25px 10px;
+    }
 }
 
 .results h3 {
@@ -100,11 +103,35 @@
     float: left;
 
     width: 30%;
-    height: 80vh;
-    padding: 10px;
+    height: 82vh;
+    padding: 20px;
 
-    background-color: rgba(248, 243, 178,0.8);
+    background-color: $lightBrandColor;
     box-shadow: 0 3px 7px 0 rgba(0,0,0,.35);
+    widows: 80%;
+    border-radius: 15px;
+    @include respond-to(medium) {
+       width: 90%;
+       margin: 0 auto;
+        height: 80vh;
+        float: none;
+    }
+    @include respond-to(small) {
+       width: 98%;
+    }
+}
+
+.results__playlistContainer h3 {
+    @include respond-to(medium) {
+       transform: translateY(80%);
+    }
+}
+
+.results__generateNewPlaylistBtn {
+    @include respond-to(medium) {
+       display: block;
+       margin: 0 auto;
+    }
 }
 
 .results__mapContainer {
@@ -112,11 +139,45 @@
     float: right;
 
     width: calc(70% - 10px);
-    height: 80vh;
-    padding: 10px;
+    height: 82vh;
+    padding: 20px;
 
-    background-color: rgba(248, 243, 178,0.8);
+    background-color: $lightBrandColor;
     box-shadow: 0 3px 7px 0 rgba(0,0,0,.35);
+    border-radius: 15px;
+    @include respond-to(medium) {
+       width: 90%;
+       height: 85vh;
+       margin: 0 auto;
+       margin-top: 10px;
+       float: none;
+    }
+    @include respond-to(small) {
+       width: 98%;
+    }
+}
+
+.results__mapContainer h3 {
+     @include respond-to(medium) {
+       width: 65%;
+    }
+    @include respond-to(small) {
+       width: 100%;
+       margin: 0;
+    }
+}
+
+.results__mapContainer button {
+    float: right;
+}
+
+.music__textButtonFloatContainer button {
+    @include respond-to(medium) {
+       transform: translateY(calc(50% - 15px));
+    }
+     @include respond-to(medium) {
+        margin-bottom: 10px;
+    }
 }
 
 .results__playlist iframe {
@@ -134,3 +195,17 @@
     border: 2px solid $darkBrandColor;
 }
 
+.music__textButtonFloatContainer h3{
+    @include respond-to(medium) {
+        float: left;
+    }
+     @include respond-to(small) {
+        float: left;
+    }
+}
+
+.music__textButtonFloatContainer button{
+    @include respond-to(medium) {
+        float: right;
+    }
+}
