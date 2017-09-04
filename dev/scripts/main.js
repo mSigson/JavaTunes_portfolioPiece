@@ -38,8 +38,6 @@ const app = {
 
 };
 
- //TODO: remember to use this.
-
 app.init = function () {
 	app.initDisplay();
 	app.events();
@@ -190,7 +188,6 @@ app.isResultsShowing = function(){
 	return $('.results').css('display') !== 'none'
 }; 
 
-// Maren
 app.createMusicGenreBtnListener = function(){
 
 	$('.music__genreBtn').on('click', function (e){
@@ -211,19 +208,16 @@ app.removeClassSelectedFromAllBtns = function(){
 	$('.music__genreBtn').removeClass('music__genreBtn--selected');
 };
 
-// Maren
 app.addClassSelected = function(selectedButton) {
 	// add class to selected button {music__genreBtn--selected}, 
 	$(selectedButton).addClass('music__genreBtn--selected');
 };
 
-// Maren
 app.storeGenreVal = function(){
 	// store value of selected input in app.genre
 	app.genre = $('.music__genreBtn--selected').val();
 };
 
-// Maren
 app.resetOtherGenreToDefault = function(){
 // -reset the <select class="genreOtherInput"> to default value
 	$('.music__GenreOtherSelect option').prop('selected', function() {
@@ -231,9 +225,8 @@ app.resetOtherGenreToDefault = function(){
     });
 };
 
-// Maren
+
 app.createGenreOtherInputListener = function(){
-	 // -IF user selects <select class="music__genreOtherInput>", remove the class {music__genreBtn--selected} from all buttons, store value of selected input in app.genre
 
 	 $('select').on('change', function(){
 		 if($('#music__GenreOtherSelect').val() !== "other"){
@@ -500,7 +493,6 @@ app.showResults = function(){
 	$('.results').show();
 };
 
-// Maren
 app.alertIncompleteForm = function(){
 		sweetAlert({
 	         title: 'Incomplete',
@@ -556,19 +548,12 @@ app.scrollToLanding = function(){
      'slow');
 };
 
-// Maren
 //  - initialize the auto complete library
 app.initLocationInput = function () {
 	
 	// Create the search box and link it to the UI element.
 	var input = document.getElementById('pac-input');
 	var searchBox = new google.maps.places.SearchBox(input);
-	// map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-
-	// $('landing__locationForm').on('submit',function(e) {
-	// 	e.preventDefault();
-	// 	console.log('form submitting.');
-	// });
 
 	// Listen for the event fired when the user selects a prediction and retrieve
 	// more details for that place.
@@ -586,18 +571,6 @@ app.initLocationInput = function () {
 		  };
 
 		$('.results__mapTitle').html(`Coffee shops near ${app.location.name}`);
-
-
-		  // e.preventDefault();
-
-		  // For each place, get the icon, name and location.
-		  // var bounds = new google.maps.LatLngBounds();
-		  // places.forEach(function(place) {
-		  //   if (!place.geometry) {
-		  //     console.log("Returned place contains no geometry");
-		  //     return;
-		  //   }
-		  // });
 
 		  $('.landing__locationFormSubmitBtn').trigger('click');
 	});	
