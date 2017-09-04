@@ -5,6 +5,12 @@
     }
   }
 
+  @else if $breakpoint == "music__buttonBreak" {
+    @media (max-width: 622px) {
+      @content;
+    }
+  }
+
   @else if $breakpoint == "medium" {
     @media (max-width: 768px) {
       @content;
