@@ -20,6 +20,7 @@
 	background: rgba(250, 250, 250, 0.5);
 	padding: 20px 0px;
 	box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, .35);
+
 	@include respond-to(music__buttonBreak) {
 		min-height: 90vh;
 	}

@@ -103,10 +103,10 @@
     float: left;
 
     width: 30%;
-    height: 82vh;
+    min-height: 90vh;
     padding: 20px;
 
-    background-color: $lightBrandColor;
+    background: #f9f6d6;
     box-shadow: 0 3px 7px 0 rgba(0,0,0,.35);
     widows: 80%;
     border-radius: 5px;
@@ -139,10 +139,10 @@
     float: right;
 
     width: calc(70% - 10px);
-    height: 82vh;
+    min-height: 90vh;
     padding: 20px;
 
-    background-color: $lightBrandColor;
+    background: #f9f6d6;
     box-shadow: 0 3px 7px 0 rgba(0,0,0,.35);
     border-radius: 5px;
     @include respond-to(medium) {
