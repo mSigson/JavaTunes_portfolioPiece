@@ -296,7 +296,7 @@ app.showLoadScreen = function(){
 // Fatin
 app.displayMap = function(){
 	//TODO: remove this line
-	$('#results__map').css('height', '200px').css('width','100%');
+	// $('#results__map').css('height', '200px').css('width','100%');
 	
 	//create map
 	if ( !app.hasMap() ) {
