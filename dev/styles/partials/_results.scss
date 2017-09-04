@@ -109,7 +109,7 @@
     background-color: $lightBrandColor;
     box-shadow: 0 3px 7px 0 rgba(0,0,0,.35);
     widows: 80%;
-    border-radius: 15px;
+    border-radius: 5px;
     @include respond-to(medium) {
        width: 90%;
        margin: 0 auto;
@@ -144,7 +144,7 @@
 
     background-color: $lightBrandColor;
     box-shadow: 0 3px 7px 0 rgba(0,0,0,.35);
-    border-radius: 15px;
+    border-radius: 5px;
     @include respond-to(medium) {
        width: 90%;
        height: 85vh;
@@ -183,6 +183,11 @@
 
     margin: 10px auto;
     border: 2px solid $darkBrandColor;
+}
+
+.results__mapPopupTitle {
+    font-weight: 700;
+    font-size: 2rem;
 }
 
 .music__textButtonFloatContainer h3{
