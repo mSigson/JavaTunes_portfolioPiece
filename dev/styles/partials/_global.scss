@@ -49,6 +49,13 @@ img {
 	background: $darkBrandColor;
 	color: $lightBrandColor;
 	border: none;
+	padding: 7px 15px;
+	font-size: 15px;
+	box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, .35);
+	&:hover {
+		background: $lightBrandColor;
+		color: $darkBrandColor;
+	}
 }
 
 // TODO: check if needs to be removed
@@ -56,11 +63,6 @@ img {
 .music, 
 .results {
 	min-height: 100vh;
-}
-
-.btn--pageAction:hover {
-	background: $lightBrandColor;
-	color: $darkBrandColor;
 }
 
 .btn--pageAction:focus {
