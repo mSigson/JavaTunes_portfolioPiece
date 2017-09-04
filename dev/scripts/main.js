@@ -485,7 +485,8 @@ app.alertIncompleteForm = function(){
 	         text: 'Please pick from either the genres provided or from the "Other" menu.',
 	         type: 'error',
 	         allowEscapeKey: 'true',
-	         showConfirmButton: true
+	         showConfirmButton: true,
+	         confirmButtonColor: "#1f6d69",
 	    });
 	}
 };

@@ -1,0 +1,79 @@
+.music {
+	background: $lightBrandColor;
+}
+
+.music .wrapper {
+	max-width: 900px;
+	transform: translateY(calc(50% - 180px));
+}
+
+.music__container {
+	border: 2px solid $darkBrandColor;
+	background: rgba(250, 250, 250, 0.5);
+	padding: 20px 0px;
+	box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, .35);
+}
+
+.music h2 {
+	margin: 0 auto;
+	width: 50%;
+	text-align: center;
+	padding-bottom: 20px;
+}
+
+.music__genreBtnContainer {
+	width: 90%;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.music__genreForm {
+	text-align: center;
+}
+
+.music__genreBtn {
+	width: 20%;
+	max-width: 145px;
+	margin: 0 10px;
+	margin-bottom: 10px;
+	padding-top: 10px;
+	background: $fadedMedBrandColor;
+	border: 2px solid $darkBrandColor;
+	color: black;
+	box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, .35);
+}
+
+.music__genreBtn:focus {
+	outline: none;
+	box-shadow: 0px 0px 2px 4px $darkBrandColor;
+}
+
+.music__genreBtn img {
+	width: 45%;
+	opacity: 0.8;
+}
+
+.music__GenreOtherSelect {
+	background: $fadedMedBrandColor;
+	border: 2px solid $darkBrandColor;
+	margin-top: 10px;
+	font-size: 15px;
+	padding: 5px;
+	width: 200px;
+	height: 40px;
+}
+
+.music__GenreOtherSelect:focus {
+	outline: none;
+	box-shadow: 0px 0px 2px 2px $darkBrandColor;
+}
+
+.music__musicFormSubmitBtn {
+	margin: auto;
+	display: block;
+	margin-top: 20px;
+	padding: 15px 15px;
+	font-size: 15px;
+	border: none;
+	box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, .35);
+}
