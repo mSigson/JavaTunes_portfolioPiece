@@ -5,13 +5,28 @@
 .music .wrapper {
 	max-width: 900px;
 	transform: translateY(calc(50% - 180px));
+	@include respond-to(music__buttonBreak) {
+		transform: translateY(calc(50% - 310px));
+	}
+	@include respond-to(small) {
+		transform: translateY(1%);
+	}
 }
 
 .music__container {
+	width: 90%;
+	margin: 0 auto;
 	border: 2px solid $darkBrandColor;
 	background: rgba(250, 250, 250, 0.5);
 	padding: 20px 0px;
 	box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, .35);
+	@include respond-to(music__buttonBreak) {
+		min-height: 90vh;
+	}
+	@include respond-to(small) {
+		width: 95%;
+		min-height: 95vh;
+	}
 }
 
 .music h2 {
@@ -19,12 +34,18 @@
 	width: 50%;
 	text-align: center;
 	padding-bottom: 20px;
+	@include respond-to(small) {
+		width: 100%;
+	}
 }
 
 .music__genreBtnContainer {
 	width: 90%;
 	margin: 0 auto;
 	text-align: center;
+	@include respond-to(small) {
+		width: 100%;
+	}
 }
 
 .music__genreForm {
@@ -41,6 +62,15 @@
 	border: 2px solid $darkBrandColor;
 	color: black;
 	box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, .35);
+	@include respond-to(medium) {
+		width: 30%;
+	}
+	@include respond-to(music__buttonBreak) {
+		width: 45%;
+	}
+	@include respond-to(small) {
+		width: 45%;
+	}
 }
 
 .music__genreBtn:focus {
@@ -53,6 +83,12 @@
 	opacity: 0.8;
 }
 
+.hide {
+	@include respond-to(medium) {
+		display: none;
+	}
+}
+
 .music__GenreOtherSelect {
 	background: $fadedMedBrandColor;
 	border: 2px solid $darkBrandColor;
@@ -61,6 +97,10 @@
 	padding: 5px;
 	width: 200px;
 	height: 40px;
+	@include respond-to(music__buttonBreak) {
+		width: 300px;
+		height: 50px;
+	}
 }
 
 .music__GenreOtherSelect:focus {
