@@ -44,7 +44,7 @@
 			<h2 class="landing__locationTitle">Where do you want to find coffee shops?</h2>
 			<div class="landing__locationInputContainer">
 				<input id="pac-input" class="landing__locationInput controls" type="text" placeholder="Search location...">
-				<button class="landing__locationFormSubmitBtn btn--pageAction"><p class="landing__locationFormSubmitBtnText">Find Coffee Shops</p><img class ="landing__locationFormSubmitBtnIcon" src="dev/assets/noun_862561_cc.svg" alt=""></button>
+				<button class="landing__locationFormSubmitBtn"><p class="landing__locationFormSubmitBtnText">Find Coffee Shops</p><img class ="landing__locationFormSubmitBtnIcon" src="dev/assets/noun_862561_cc.svg" alt=""></button>
 			</div>
 		<!-- </form> -->
 	</div>
@@ -121,16 +121,20 @@
 	</div>
 	<div class="results__mainContentContainer wrapper clearfix">
 		<div class="results__playlistContainer">
-			<h3 class="results__playlistTitle">Your Playlist</h3>
-			<button class="results__changeMusicBtn btn--pageAction">Change Genre</button>
+			<div class="music__textButtonFloatContainer clearfix">
+				<h3 class="results__playlistTitle">Your Playlist</h3>
+				<button class="results__changeMusicBtn btn--pageAction">Change Genre</button>
+			</div>
 			<div class="results__playlist">
 				<!-- Spotify Playlist -->
 			</div>
 			<button class="results__generateNewPlaylistBtn btn--pageAction">New Playlist</button>
 		</div>
 		<div class="results__mapContainer">
-			<h3 class="results__mapTitle">Coffee Locations near (user's inputted location)</h3>
-			<button class="results__changeLocationBtn btn--pageAction">Change Location</button>
+			<div class="music__textButtonFloatContainer clearfix">
+				<h3 class="results__mapTitle"></h3>
+				<button class="results__changeLocationBtn btn--pageAction">Change Location</button>
+			</div>
 			<div id="results__map" class="results__map">
 				<!-- FourSquare/Leaflet Map -->
 			</div>
