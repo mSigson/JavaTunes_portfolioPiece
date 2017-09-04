@@ -77,7 +77,11 @@ app.createLocationFormSubmitListener = function(){
         // -Do an AJAX call to FourSquare API.
         app.coffeeShopLocationPromise = app.getCoffeeShopLocation();
 
-        if( !app.isResultsShowing() ){
+        if(app.isLocationInputNull()){
+
+			app.alertIncompleteLocationForm();
+
+		} else if ( !app.isResultsShowing() ){
 	//    -Set display: block for section music.
 			app.showMusic();
 	//    - Smooth scroll to section music.
@@ -93,7 +97,6 @@ app.createLocationFormSubmitListener = function(){
 			});
 			
 			app.scrollToResults();
-
         }
      });
 };	
@@ -139,6 +142,23 @@ app.responseToCoffeeShopInfo = function(coffeeData) {
 		});
 	});
 }
+
+// if no location has been typed in the
+app.isLocationInputNull = function () {
+	 return app.location.address === '';
+};
+
+app.alertIncompleteLocationForm = function(){
+		sweetAlert({
+	         title: 'Incomplete',
+	         text: 'Please Type in a Location!',
+	         type: 'error',
+	         allowEscapeKey: 'true',
+	         showConfirmButton: true,
+	         confirmButtonColor: "#1f6d69",
+	    });
+}
+
 
 // Jenn
 app.scrollToMusic = function() {
