@@ -93,6 +93,11 @@
 	vertical-align: bottom;
 	border-bottom-right-radius: 0.3rem;
 	border-top-right-radius: 0.3rem;
+	border: none;
+	background: $darkBrandColor;
+	&:hover {
+		background: $lightBrandColor;
+	}
 	@include respond-to ('small') {
 		margin: 1rem auto 1rem auto;
 		border-radius: 0.3rem;
