@@ -4,7 +4,7 @@ const app = {
 	location : {
 		lat  : 43.6532,
 		lng  : -79.3832,
-		address: ''
+		address: 'Toronto, Ontario, Canada',
 	},
 	resultsDisplayed : false,
 	spotifyPlaylistPromise: null,
@@ -33,6 +33,7 @@ const app = {
 	mapZoomLevel: 13,
 	mapMarkersLayer: {},
 	mapMarkers: [],
+	mapPopups: [],
 
 };
 
@@ -292,12 +293,12 @@ app.showLoadScreen = function(){
 	$('.results__loadScreenContainer').show();
 };
 
+/******** GOOGLE MAP FUNCTIONALITY ********/
+app.initMap = function() {
+	console.log('map api ready.');
+};
 
-// Fatin
-app.displayMap = function(){
-	//TODO: remove this line
-	// $('#results__map').css('height', '200px').css('width','100%');
-	
+app.displayMap = function() {
 	//create map
 	if ( !app.hasMap() ) {
 		app.map = app.createMap();
@@ -306,79 +307,80 @@ app.displayMap = function(){
 	app.setMapView();
 
 	const markers = [];
+	const popups = [];
 
 	//generate the markers with popup of shop info.
 	for (let shop of app.coffeeShopsInfo) {
 		const marker = app.createMapMarker(shop.location);
 
-		marker.bindPopup( app.createMapPopup(shop) );
+		console.log(marker, marker.position.lat(), marker.position.lng());
+
+		const popup = app.createMapPopup(shop);
+
+		app.bindPopupToMarker(popup, marker);
 
 		markers.push(marker);
+		popups.push(popup);
 	}
 
+
+	app.mapMarkers = markers;
+	app.mapPopups = popups;
 	
-	markers.forEach(function(marker) {
-		marker.addTo(app.map);
-	});
-
-	app.markers = markers;
-
-	//add all markers to map.
-	// app.mapMarkersLayer = L.layerGroup(markers);
-	// app.mapMarkersLayer.addTo(app.map);
-	// console.log(app.mapMarkersLayer);
-	
-
 };
 
 app.setMapView = function() {
-	app.map.setView([app.location.lat, app.location.lng], app.mapZoomLevel);
+	app.map.panTo({lat: app.location.lat, lng: app.location.lng});
 };
 
-// Fatin
 app.createMap = function () {
-	//initialize map
-	const $map = L.map('results__map')
-	.setView([app.location.lat, app.location.lng], app.mapZoomLevel);
-
-
-	//setup tile layer for map.
-	L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-		//add credits for the data
-		attribution:    
-						'Map data &copy;<a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-		maxZoom:        18,
-		id:             'mapbox.streets',
-		accessToken:    CONSTANTS.mapboxApiKey,
-	})
-	.addTo($map); // Pass in the tile layer data to the Leaflet map, mymap
-
-	return $map;
+	return new google.maps.Map(document.getElementById('results__map'), {
+		center: {lat: app.location.lat, lng: app.location.lng},
+		zoom: app.mapZoomLevel,
+		styles: CONSTANTS.googleMapStyles,
+	});
 };
 
 app.createMapMarker = function(location) {
-	return L.marker([location.lat, location.lng]);
+	return new google.maps.Marker({
+		position: location,
+		map: app.map,
+		icon: 'public/assets/markerIcon50x50wShadow.png',
+	});
 };
 
 app.createMapPopup = function(shop) {
-	return `<p class="results__mapPopupTitle">${shop.name}</p>
-			<p class="results__mapPopupAddress">${shop.address}</p>
-			<p class="results__mapPopupPhoneNum">${shop.phoneNum}</p>
-			<a class="results__mapPopupWebsite" href="${shop.website}">Website</a>`;
+	const content = `<p class="results__mapPopupTitle">${shop.name}</p>
+					<p class="results__mapPopupAddress">${shop.address}</p>
+					<p class="results__mapPopupPhoneNum">${shop.phoneNum}</p>
+					<a class="results__mapPopupWebsite" href="${shop.website}">Website</a>`;
+
+	return new google.maps.InfoWindow({
+		content: content
+	  });	
 };
 
-// TODO
-// Fatin
-app.clearMap = function () {
-	//clear out all the markers from map.
-	app.markers.forEach(function(marker){
-		marker.remove();
+app.bindPopupToMarker = function(popup, marker) {
+	marker.addListener('click', function() {
+		popup.open(app.map, marker);
 	});
 };
+
+
+app.clearMap = function () {
+	//clear out all the markers from map.
+	app.mapMarkers.forEach(function(marker){
+		marker.setMap(null);
+	});
+};
+
+
 
 app.hasMap = function () {
 	return !$.isEmptyObject(app.map); 
 };
+
+/******** ******* ********/
 
 // Fatin
 app.displaySpotifyPlaylist = function(){
@@ -538,6 +540,7 @@ app.scrollToLanding = function(){
 // Maren
 //  - initialize the auto complete library
 app.initLocationInput = function () {
+	
 	// Create the search box and link it to the UI element.
 	var input = document.getElementById('pac-input');
 	var searchBox = new google.maps.places.SearchBox(input);

@@ -23,4 +23,95 @@ const CONSTANTS = {
 	/* Map Related */
 	mapboxApiKey: 'pk.eyJ1IjoiZmhhcXVlIiwiYSI6ImNqNndyYmg4eDF5dngyd2xhYW84cG0zd2IifQ.8khOiRGilQjImj85qMaqAw',
 
+
+	googleMapStyles: [
+		{
+			"featureType": "administrative",
+			"elementType": "labels.text.fill",
+			"stylers": [
+				{
+					"color": "#444444"
+				}
+			]
+		},
+		{
+			"featureType": "landscape",
+			"elementType": "all",
+			"stylers": [
+				{
+					"color": "#f2f2f2"
+				}
+			]
+		},
+		{
+			"featureType": "landscape",
+			"elementType": "geometry.fill",
+			"stylers": [
+				{
+					"color": "#f8f3b2"
+				}
+			]
+		},
+		{
+			"featureType": "poi",
+			"elementType": "all",
+			"stylers": [
+				{
+					"visibility": "off"
+				}
+			]
+		},
+		{
+			"featureType": "road",
+			"elementType": "all",
+			"stylers": [
+				{
+					"saturation": -100
+				},
+				{
+					"lightness": 45
+				}
+			]
+		},
+		{
+			"featureType": "road.highway",
+			"elementType": "all",
+			"stylers": [
+				{
+					"visibility": "simplified"
+				}
+			]
+		},
+		{
+			"featureType": "road.arterial",
+			"elementType": "labels.icon",
+			"stylers": [
+				{
+					"visibility": "off"
+				}
+			]
+		},
+		{
+			"featureType": "transit",
+			"elementType": "all",
+			"stylers": [
+				{
+					"visibility": "off"
+				}
+			]
+		},
+		{
+			"featureType": "water",
+			"elementType": "all",
+			"stylers": [
+				{
+					"color": "#1f6d61"
+				},
+				{
+					"visibility": "on"
+				}
+			]
+		}
+	],
+
 };
