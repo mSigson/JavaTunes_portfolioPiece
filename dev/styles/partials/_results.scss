@@ -1,0 +1,136 @@
+// Vertically aligning contents by setting parent
+// to table, child to table-cell, vertical-align center
+// solution by: https://stackoverflow.com/questions/2939914/vertically-align-text-in-a-div 
+.results {
+    position: relative;
+    display: table;
+    // border: 2px solid red;
+
+    width: 100%;
+
+    
+}
+
+.results__bg {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+
+    z-index: $zBack;
+
+    // background-image: url(../assets/swirl_pattern_background.jpg);
+    
+
+    background: linear-gradient(180deg, rgba(31, 109, 105, 1) 0%, rgba(31, 109, 105, 0.8) 100%), url(../assets/swirl_pattern_background.jpg);
+
+    background-size: 150%;
+    background-position: center;
+
+    // filter: hue-rotate(150deg);
+
+    
+}
+
+.results__loadScreenContainer {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+
+    z-index: $zFront;
+
+    background: rgba(248, 243, 178,0.9);
+	box-shadow: 0 3px 7px 0 rgba(0,0,0,.35);
+
+}
+
+.results__mainContentContainer {
+    position: relative;
+    display: table-cell;
+    vertical-align: center;
+
+    padding: 50px 10px;
+    // border: 1px solid red;
+}
+
+.results h3 {
+    margin: 0;
+    margin-bottom: 10px;
+    padding: 0;
+}
+
+.results__loadScreen p {
+    line-height: 4.5rem;
+    letter-spacing: 1px;
+
+    text-align: center;
+    
+    font-size: $subHeadingFontSize;
+}
+
+.results__loadIndicator img {
+    display: block;
+    margin: 0 auto;
+}
+
+
+
+// .results__loadIndicator {
+//     position: absolute;
+//     left: 0;
+//     right: 0;
+//     top: 0;
+//     bottom: 0;
+// }
+
+.results__loadErrorMsg {
+    padding: 100px 0px;
+}
+
+.results__reloadBtn {
+    display: block;
+    margin: 0 auto;
+}
+
+.results__playlistContainer {
+    // border: 1px solid green;
+    float: left;
+
+    width: 30%;
+    height: 80vh;
+    padding: 10px;
+
+    background-color: rgba(248, 243, 178,0.8);
+    box-shadow: 0 3px 7px 0 rgba(0,0,0,.35);
+}
+
+.results__mapContainer {
+    // border: 1px solid blue;
+    float: right;
+
+    width: calc(70% - 10px);
+    height: 80vh;
+    padding: 10px;
+
+    background-color: rgba(248, 243, 178,0.8);
+    box-shadow: 0 3px 7px 0 rgba(0,0,0,.35);
+}
+
+.results__playlist iframe {
+    width: 100%;
+    height: 380px;
+    margin: 10px auto;
+    border: 2px solid $darkBrandColor;
+}
+
+.results__map {
+    width: 100%;
+    height: 380px;
+
+    margin: 10px auto;
+    border: 2px solid $darkBrandColor;
+}
+

@@ -284,19 +284,19 @@ app.hideLoadIndicator = function(){
 
 // Fatin
 app.hideLoadScreen = function(){
-	$('.results__loadScreen').hide();
+	$('.results__loadScreenContainer').hide();
 };
 
 // Fatin
 app.showLoadScreen = function(){
-	$('.results__loadScreen').show();
+	$('.results__loadScreenContainer').show();
 };
 
 
 // Fatin
 app.displayMap = function(){
 	//TODO: remove this line
-	$('#results__map').css('height', '200px').css('width','100%');
+	// $('#results__map').css('height', '200px').css('width','100%');
 	
 	//create map
 	if ( !app.hasMap() ) {
