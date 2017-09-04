@@ -479,7 +479,6 @@ app.showResults = function(){
 
 // Maren
 app.alertIncompleteForm = function(){
-	if(app.genre === null){
 		sweetAlert({
 	         title: 'Incomplete',
 	         text: 'Please pick from either the genres provided or from the "Other" menu.',
@@ -488,7 +487,6 @@ app.alertIncompleteForm = function(){
 	         showConfirmButton: true,
 	         confirmButtonColor: "#1f6d69",
 	    });
-	}
 };
 
 // Fatin
@@ -561,7 +559,11 @@ app.initLocationInput = function () {
 		  	lng : places[0].geometry.location.lng(),
 		  	lat : places[0].geometry.location.lat(),
 		  	address : places[0].formatted_address
+		  	console.log(app.location.address);
 		  };
+
+		$('.results__mapTitle').append(`Coffee shop locations near ${app.location.address}`);
+
 
 
 
