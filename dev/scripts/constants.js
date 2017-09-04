@@ -27,9 +27,6 @@ const CONSTANTS = {
 
 	/* Map Related */
 
-	mapboxApiKey: 'pk.eyJ1IjoiZmhhcXVlIiwiYSI6ImNqNndyYmg4eDF5dngyd2xhYW84cG0zd2IifQ.8khOiRGilQjImj85qMaqAw',
-
-
 	googleMapStyles: [
 		{
 			"featureType": "administrative",

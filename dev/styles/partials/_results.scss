@@ -4,7 +4,7 @@
 .results {
     position: relative;
     display: table;
-    // border: 2px solid red;
+
 
     width: 100%;
 
@@ -18,18 +18,12 @@
     bottom: 0;
     top: 0;
 
-    z-index: $zBack;
-
-    // background-image: url(../assets/swirl_pattern_background.jpg);
-    
+    z-index: $zBack; 
 
     background: linear-gradient(180deg, rgba(31, 109, 105, 1) 0%, rgba(31, 109, 105, 0.8) 100%), url(../assets/swirl_pattern_background.jpg);
 
     background-size: 150%;
     background-position: center;
-
-    // filter: hue-rotate(150deg);
-
     
 }
 
@@ -53,7 +47,7 @@
     vertical-align: center;
 
     padding: 50px 10px;
-    // border: 1px solid red;
+
     @include respond-to(medium) {
        padding: 25px 10px;
     }
@@ -79,16 +73,6 @@
     margin: 0 auto;
 }
 
-
-
-// .results__loadIndicator {
-//     position: absolute;
-//     left: 0;
-//     right: 0;
-//     top: 0;
-//     bottom: 0;
-// }
-
 .results__loadErrorMsg {
     padding: 100px 0px;
 }
@@ -99,7 +83,7 @@
 }
 
 .results__playlistContainer {
-    // border: 1px solid green;
+
     float: left;
 
     width: 30%;
@@ -135,7 +119,7 @@
 }
 
 .results__mapContainer {
-    // border: 1px solid blue;
+
     float: right;
 
     width: calc(70% - 10px);
