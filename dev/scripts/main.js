@@ -12,7 +12,6 @@ const app = {
 	coffeeShopLocationPromise: null,
 
 	coffeeShopsInfo: [],
-	//name, address, phoneNum, website, location: {lat:, lng:}
 
 	spotifyHeader: {}, //for Spotify OAuth
 
@@ -27,7 +26,7 @@ const app = {
 	// so we get new search results.
 	spotifyPlaylistsRequestOffset: 0,
 	
-	map: {}, //contains Leaflet map object
+	map: {}, //contains Google Map object
 	mapZoomLevel: 13,
 	mapMarkersLayer: {},
 	mapMarkers: [],
@@ -76,9 +75,9 @@ app.createLocationFormSubmitListener = function(){
 			app.alertIncompleteLocationForm();
 
 		} else if ( !app.isResultsShowing() ){
-	//    -Set display: block for section music.
+			//Set display: block for section music.
 			app.showMusic();
-	//    - Smooth scroll to section music.
+			//Smooth scroll to section music.
 			app.scrollToMusic();
         } else {
 			//when coffeeshop data is recieved, display it on map.
@@ -93,7 +92,7 @@ app.createLocationFormSubmitListener = function(){
 };	
 
 app.getCoffeeShopLocation = function(location){
-	// -Do an AJAX call to FourSquare API.
+	// Do an AJAX call to FourSquare API.
 	return $.ajax({
 		url: 'https://api.foursquare.com/v2/venues/search?',
 		data: {
@@ -106,7 +105,6 @@ app.getCoffeeShopLocation = function(location){
 		}
 	}).then(function(res){
 		let coffeeShopLocationsRes = res.response.venues;
-		// console.log(coffeeShopLocationsRes);
 
 		app.responseToCoffeeShopInfo(coffeeShopLocationsRes);
 	})
@@ -220,12 +218,10 @@ app.createGenreOtherInputListener = function(){
 	 });
 };
 
-//Fatin 
+
 app.createMusicFormSubmitBtnListener = function(){
 
 		$('.music__musicFormSubmitBtn').on('click', function() {
-			//- store the value of both inputs in minutes from {music__durationForm}, call this value app.duration
-			// app.storeDurationVal(); //DEPRECATED
 
 				//if the value of variable app.genre is =null, sweet alert message
 				if(app.genreIsNull()) {
@@ -256,37 +252,36 @@ app.createMusicFormSubmitBtnListener = function(){
 								app.showErrorMsg();
 							});
 
-
 				}
 		});
 };
 
-// Fatin
+
 app.showErrorMsg = function(){
 	$('.results__loadErrorMsg').show();
 };
 
-// Fatin
+
 app.hideErrorMsg = function(){
 	$('.results__loadErrorMsg').hide();
 };
 
-// Fatin
+
 app.showLoadIndicator = function(){
 	$('.results__loadIndicator').show();
 };
 
-// Fatin
+
 app.hideLoadIndicator = function(){
 	$('.results__loadIndicator').hide();
 };
 
-// Fatin
+
 app.hideLoadScreen = function(){
 	$('.results__loadScreenContainer').hide();
 };
 
-// Fatin
+
 app.showLoadScreen = function(){
 	$('.results__loadScreenContainer').show();
 };
@@ -380,7 +375,8 @@ app.hasMap = function () {
 
 /******** ******* ********/
 
-// Fatin
+/******** SPOTIFY FUNCTIONALITY ********/
+
 app.displaySpotifyPlaylist = function(){
 	const $playlistContainer = $('.results__playlist');
 	
@@ -394,12 +390,12 @@ app.displaySpotifyPlaylist = function(){
 	$playlistContainer.show();
 };
 
-// Fatin
+
 app.clearSpotifyPlaylistDom = function() {
 	$('.results__playlist').empty();
 }
 
-// Fatin
+
 app.pickSpotifyPlaylistUri = function() {
 	const uri = app.spotifyPlaylists[app.numOfPlaylistsGenerated++].uri;
 
@@ -417,13 +413,11 @@ app.isSpotifyPlaylistsExhausted = function() {
 	return app.numOfPlaylistsGenerated >= app.spotifyPlaylists.length;
 };
 
-// Fatin
+
 app.createPlaylistDom = function(uri) {
 
 	return `<iframe src="${CONSTANTS.spotifyEmbeddedBaseUrl}?uri=${uri.replace(/:/g, '%3A')}&theme=${CONSTANTS.spotifyEmbeddedThemeColor}" width="${CONSTANTS.spotifyEmbeddedWidth}" height="${CONSTANTS.spotifyEmbeddedHeight}" frameborder="0" allowtransparency="true"></iframe>`
 };
-
-// Fatin
 
 app.resetSpotifyPlaylistAndData = function() {
 	app.numOfPlaylistsGenerated = 0;
@@ -431,9 +425,9 @@ app.resetSpotifyPlaylistAndData = function() {
 	
 	app.clearSpotifyPlaylists();
 	app.clearSpotifyPlaylistDom();
-}
+};
 
-// Fatin
+
 app.getSpotifyPlaylist = function(){
  // - call Spotify AJAX function
 	return $.ajax({
@@ -451,7 +445,7 @@ app.getSpotifyPlaylist = function(){
 	.catch( app.spotifyErrorHandle );
 };
 
-// Fatin
+
 app.responseToSpotifyPlaylist = function(res) {
 	const spotifyPlaylists = [];
 
@@ -466,12 +460,13 @@ app.responseToSpotifyPlaylist = function(res) {
 	return spotifyPlaylists;
 };
 
-// Fatin
+
 app.clearSpotifyPlaylists = function() {
 	app.spotifyPlaylists = [];
 };
 
-// Fatin
+/******** ******* ********/
+
 app.showResults = function(){
 	//set <section class="results"> display block.
 	$('.results').show();
@@ -488,7 +483,7 @@ app.alertIncompleteForm = function(){
 	    });
 };
 
-// Fatin
+
 app.genreIsNull = function(){
 // must return true or false
 	return app.genre === null;
@@ -551,7 +546,7 @@ app.initLocationInput = function () {
 	});	
 }
 
-// Fatin
+
 app.createGenerateNewPlaylistBtnListener = function() {
 	$('.results__generateNewPlaylistBtn').on('click', function(e) {
 		e.preventDefault();
@@ -559,7 +554,7 @@ app.createGenerateNewPlaylistBtnListener = function() {
 	});
 }
 
-/********** Spotify API Related Functions ***********/
+/********** Spotify Authorization API Related Functions ***********/
 
 //Main method to get token and set the header for Spotify OAuth.
 app.setSpotifyAuthorization = function() {
@@ -607,24 +602,3 @@ app.setSpotifyHeader = function (tokenType, accessToken) {
 		'Authorization': `${tokenType} ${accessToken}`
 	}
 };
-
-// app.createSpotifyPlaylist = function() {
-// 	//getSpotify tracks
-// 	app.getSpotifyTracks()
-// 		.then( () => app.generatePlaylist );
-// };
-
-// app.generatePlaylist = function() {
-// 	console.log(app.potentialTracks);
-// };
-
-// app.getSpotifyTracks = function() {
-// 	return $.ajax({
-// 				url: 'https://api.spotify.com/v1/recommendations/available-genre-seeds',
-// 				method: 'GET',
-// 				headers: app.spotifyHeader,
-// 				data: {},
-// 			})
-// 			.then( (res) => console.log(res) )
-// 			.catch( app.spotifyAuthorizationErrorHandle );
-// };
