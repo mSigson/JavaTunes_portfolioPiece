@@ -16,12 +16,16 @@ section {
 h1 {
 	font-size: $mainHeadingFontSize;
 	font-family: $headingFontFamily;
+	color: 	rgba(31, 109, 105, 0.7);
+	margin: 0;
+	font-style: italic;
 }
 
 h2 {
 	font-size: $subHeadingFontSize;
 	font-family: $headingFontFamily;
 	color: $darkBrandColor;
+	font-style: italic;
 }
 
 h3 {

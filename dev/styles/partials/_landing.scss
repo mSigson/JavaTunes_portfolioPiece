@@ -1,2 +1,44 @@
 @import 'variables';
 
+.landing {
+	min-height: 100vh;
+	background: linear-gradient( rgba(248, 243, 178,0.4), 100%, rgba(201, 189, 185,0)), url(../assets/hero.jpeg);
+	background-size: cover;
+	text-align: center;
+}
+
+ .landing__title {
+	padding: 10rem 0 3rem 0;
+	letter-spacing: 2px;
+	text-shadow: 4px 8px 0 rgba(248, 243, 178,0.7);
+	text-transform: lowercase;
+}
+
+.hiddenlanding__locationLabel {
+	visibility: hidden;
+}
+
+.landing__description {
+	width: 45%;
+	margin: 0 auto;
+	padding: 3rem 0;
+	line-height: 2.5rem;
+	letter-spacing: 1px;
+	background: rgba(248, 243, 178,0.7);
+	box-shadow: 0 3px 7px 0 rgba(0,0,0,.35);
+}
+
+.landing__locationFormSubmitBtn {
+	width: 4%;
+}
+.landing__locationFormSubmitBtnIcon {
+	width: 100%;
+}
+
+
+
+
+
+
+
+
