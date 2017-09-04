@@ -82,6 +82,8 @@
 	@include respond-to ('small') {
 		margin: 1rem 0;
 		border-radius: 0.3rem;
+		display: block;
+		text-align: center;
 	}
 }
 
