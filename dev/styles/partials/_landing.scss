@@ -18,7 +18,10 @@
 	text-transform: lowercase;
 	@include respond-to ('medium') {
 		padding: 3.0rem 0 3rem 0;
-		font-size: 7.5rem;
+		font-size: 7rem;
+	}
+	@include respond-to ('small') {
+		font-size: 5.5rem;
 	}
 }
 
@@ -53,7 +56,9 @@
 	@include respond-to ('medium') {
 		padding-top: 5rem;
 		@include respond-to('small') {
-			padding-top: 1.5rem;		}
+			padding-top: 1.5rem;
+			font-size: 2rem;		
+		}
 	}
 }
 

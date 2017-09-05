@@ -5,10 +5,10 @@
 .music .wrapper {
 	max-width: 900px;
 	transform: translateY(calc(50% - 180px));
-	@include respond-to(music__buttonBreak) {
+	@include respond-to('music__buttonBreak') {
 		transform: translateY(calc(50% - 310px));
 	}
-	@include respond-to(small) {
+	@include respond-to('small') {
 		transform: translateY(1%);
 	}
 }
@@ -21,10 +21,10 @@
 	padding: 20px 0px;
 	box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, .35);
 
-	@include respond-to(music__buttonBreak) {
+	@include respond-to('music__buttonBreak') {
 		min-height: 90vh;
 	}
-	@include respond-to(small) {
+	@include respond-to('small') {
 		width: 95%;
 		min-height: 95vh;
 	}
@@ -35,7 +35,7 @@
 	width: 50%;
 	text-align: center;
 	padding-bottom: 20px;
-	@include respond-to(small) {
+	@include respond-to('small') {
 		width: 100%;
 	}
 }
@@ -44,7 +44,7 @@
 	width: 90%;
 	margin: 0 auto;
 	text-align: center;
-	@include respond-to(small) {
+	@include respond-to('small') {
 		width: 100%;
 	}
 }
@@ -66,13 +66,13 @@
 	&:hover {
 		background: $lightBrandColor;
 	}
-	@include respond-to(medium) {
+	@include respond-to('medium') {
 		width: 30%;
 	}
-	@include respond-to(music__buttonBreak) {
+	@include respond-to('music__buttonBreak') {
 		width: 45%;
 	}
-	@include respond-to(small) {
+	@include respond-to('small') {
 		width: 45%;
 	}
 }
@@ -88,7 +88,7 @@
 }
 
 .hide {
-	@include respond-to(medium) {
+	@include respond-to('medium') {
 		display: none;
 	}
 }
@@ -100,10 +100,19 @@
 	font-size: 15px;
 	padding: 5px;
 	width: 200px;
+	// width: 80%;
 	height: 40px;
-	@include respond-to(music__buttonBreak) {
-		width: 300px;
+	@include respond-to('music__buttonBreak') {
+		width: 80%;
 		height: 50px;
+	}
+
+	@include respond-to('medium') {
+		width: 60%;
+	}
+
+	@include respond-to('small') {
+		width: 80%;
 	}
 }
 

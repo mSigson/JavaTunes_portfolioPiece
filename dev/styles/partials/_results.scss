@@ -3,7 +3,7 @@
 // solution by: https://stackoverflow.com/questions/2939914/vertically-align-text-in-a-div 
 .results {
     position: relative;
-    display: table;
+    // display: table;
 
 
     width: 100%;
@@ -43,12 +43,12 @@
 
 .results__mainContentContainer {
     position: relative;
-    display: table-cell;
+    // display: table-cell;
     vertical-align: center;
-
+    margin-top: 70px;
     padding: 50px 10px;
 
-    @include respond-to(medium) {
+    @include respond-to('medium') {
        padding: 25px 10px;
     }
 }
@@ -94,25 +94,25 @@
     box-shadow: 0 3px 7px 0 rgba(0,0,0,.35);
     widows: 80%;
     border-radius: 5px;
-    @include respond-to(medium) {
+    @include respond-to('medium') {
        width: 90%;
        margin: 0 auto;
-        height: 80vh;
+        min-height: 90vh;
         float: none;
     }
-    @include respond-to(small) {
+    @include respond-to('small') {
        width: 98%;
     }
 }
 
 .results__playlistContainer h3 {
-    @include respond-to(medium) {
+    @include respond-to('medium') {
        transform: translateY(80%);
     }
 }
 
 .results__generateNewPlaylistBtn {
-    @include respond-to(medium) {
+    @include respond-to('medium') {
        display: block;
        margin: 0 auto;
     }
@@ -124,35 +124,31 @@
 
     width: calc(70% - 10px);
     min-height: 90vh;
-    padding: 20px;
+    padding: 20px 20px 51px 20px;
 
     background: #f9f6d6;
     box-shadow: 0 3px 7px 0 rgba(0,0,0,.35);
     border-radius: 5px;
-    @include respond-to(medium) {
+    @include respond-to('medium') {
        width: 90%;
-       height: 85vh;
+       min-height: 90vh;
        margin: 0 auto;
        margin-top: 10px;
        float: none;
     }
-    @include respond-to(small) {
+    @include respond-to('small') {
        width: 98%;
     }
 }
 
 .results__mapContainer button {
     float: right;
+    @include respond-to ('medium') {
+        float: none;
+    }
 }
 
-.music__textButtonFloatContainer button {
-    @include respond-to(medium) {
-       transform: translateY(calc(50% - 15px));
-    }
-     @include respond-to(medium) {
-        margin-bottom: 10px;
-    }
-}
+
 
 .results__playlist iframe {
     width: 100%;
@@ -174,17 +170,26 @@
     font-size: 2rem;
 }
 
-.music__textButtonFloatContainer h3{
-    @include respond-to(medium) {
-        float: left;
+
+.results__textButtonFloatContainer h3{
+    @include respond-to("medium") {
+        // float: left;
+        float:none;
     }
-     @include respond-to(small) {
-        float: left;
+     @include respond-to("small") {
+        // float: left;
     }
 }
 
-.music__textButtonFloatContainer button{
-    @include respond-to(medium) {
-        float: right;
+.results__textButtonFloatContainer button {
+    @include respond-to("medium") {
+        // float: right;
+       // transform: translateY(calc(50% - 15px));
+       float: none;
+
+       margin-top: 20px;
+    }
+     @include respond-to("medium") {
+        margin-bottom: 10px;
     }
 }
