@@ -1,7 +1,6 @@
 
 html {
 	font-size: $htmlFontSize;
-	background: $lightBrandColor;
 }
 
 section {
@@ -46,15 +45,15 @@ img {
 }
 
 .btn--pageAction {
-	background: $darkBrandColor;
-	color: $lightBrandColor;
-	border: none;
+	background:  $lightBrandColor;
+	color: $darkBrandColor;
+	border: 2px solid $darkBrandColor;
 	padding: 7px 15px;
 	font-size: 15px;
 	box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, .35);
 	&:hover {
-		background: $lightBrandColor;
-		color: $darkBrandColor;
+		background: $darkBrandColor;
+		color: $lightBrandColor;
 	}
 }
 

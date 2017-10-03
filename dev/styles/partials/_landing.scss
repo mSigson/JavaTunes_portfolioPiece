@@ -3,11 +3,26 @@
 
 .landing {
 	min-height: 100vh;
-	background: url(../assets/hero.jpeg);
+	background: linear-gradient(0deg, rgba(255, 255, 255, 0.5) 5%, rgba(255, 255, 255, 0.5) 100%), url(../assets/hero.jpeg);
+	// background: url(../assets/hero.jpeg);
 	background-size: cover;
 	text-align: center;
 	@include respond-to ('small') {
 		padding-bottom: 1rem;
+	}
+}
+
+.landing .wrapper {
+	padding: 20px 20px;
+}
+
+.landing__introContainer {
+	float: left;
+	width: 50%;
+	@include respond-to ('large') {
+		float: none;
+		width: 90%;
+		margin: 0 auto;
 	}
 }
 
@@ -30,7 +45,7 @@
 }
 
 .landing__description {
-	width: 45%;
+	width: 80%;
 	margin: 0 auto;
 	padding: 3rem 1.5rem;
 	line-height: 2.5rem;
@@ -52,9 +67,19 @@
 	}
 }
 
+.landing__locationGenreForm {
+	float: left;
+	width: 50%;
+	@include respond-to ('large') {
+		float: none;
+		width: 90%;
+		margin: 0 auto;
+	}
+}
+
 .landing__locationTitle {
 	@include respond-to ('medium') {
-		padding-top: 5rem;
+		padding-top: 1rem;
 		@include respond-to('small') {
 			padding-top: 1.5rem;
 			font-size: 2rem;		
@@ -64,6 +89,10 @@
 
 .landing__locationInputContainer {
 	font-size: 0;
+	margin-bottom: 10px;
+	@include respond-to ('large') {
+		margin-bottom: 5px;
+	}
 }
 
 #pac-input {

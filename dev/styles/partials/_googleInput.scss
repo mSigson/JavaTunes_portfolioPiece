@@ -28,14 +28,15 @@
 }
 
 #pac-input {
-  background-color: #fff;
+  background: rgba(248, 243, 178,0.7);
   font-family: Roboto;
   font-size: 15px;
   font-weight: 300;
   margin-left: 12px;
   padding: 0 11px 0 13px;
   text-overflow: ellipsis;
-  width: 400px;
+  width: 90%;
+  border: 2px solid $darkBrandColor;
 }
 
 #pac-input:focus {
